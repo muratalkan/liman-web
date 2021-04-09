@@ -58,7 +58,7 @@ class DomainNameController{
 						"domainNames" => implode(' ', $domainNameArr),
 						'webAppName' => $webAppName
 					]);
-
+					ServiceController::restartService("nginx");
 					return respond(__("The domain name has been added"), 200);
 
 				}else{
