@@ -1,6 +1,6 @@
 [ req ]
 default_bits = 2048
-default_keyfile = {{$ssl['web_app_name']}}.key
+default_keyfile = /etc/ssl/private/{{$ssl['web_app_name']}}_web.key
 prompt = no
 distinguished_name = req_distinguished_name
 
