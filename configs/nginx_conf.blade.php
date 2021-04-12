@@ -56,7 +56,7 @@ server {
 
         location ~* \.php$ {
                 include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/var/run/php/{{$web['php_version']}}.sock;
+                fastcgi_pass unix:/var/run/php/{{$web['php_version']}}-fpm.sock;
                 
                 #fastcgi_pass 127.0.0.1:9000;
                 #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
