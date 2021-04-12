@@ -63,8 +63,8 @@
                 </div>
                 <div id="ssl_opt_area">
                     <label class="col-form-label" id="ssl_info_label">{{__('Self-Signed SSL Certificate')}} | {{__('Key and Certificate Path')}}<small> | {{__('Required')}}</small></label>
-                    <input type="text" name="sslKeyPath" autocomplete="off" class="form-control" placeholder="{{__('Key Path')}} (e.g. /etc/nginx/liman.dev/liman.key)" minlength="3" maxlength="40" id="ssl_keyPath"> 
-                    <input type="text" name="sslCrtPath" autocomplete="off" class="form-control" placeholder="{{__('Certificate Path')}} (e.g. /etc/nginx/liman.dev/liman.crt)" minlength="3" maxlength="40" id="ssl_crtPath"> 
+                    <input type="text" name="sslKeyPath" autocomplete="off" class="form-control" placeholder="{{__('Key Path')}} (e.g. /etc/ssl/private/liman.key)" minlength="3" maxlength="40" id="ssl_keyPath"> 
+                    <input type="text" name="sslCrtPath" autocomplete="off" class="form-control" placeholder="{{__('Certificate Path')}} (e.g. /etc/ssl/certs/liman.crt)" minlength="3" maxlength="40" id="ssl_crtPath"> 
                 </div>
                 <div class="modal-footer justify-content-right">
                     <button type="submit" class="btn btn-success">{{__('Add')}}</button>
