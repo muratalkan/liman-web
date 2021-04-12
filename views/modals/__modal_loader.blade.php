@@ -32,10 +32,12 @@
         initializePgSQLPrivilegeModal();
     }
 
-    $('.modal').on('hidden.bs.modal', function(e){ 
-        $(this).find(".alert").fadeOut();
-        $(this).find('form')[0].reset();
-        initializeModalFunctions();
+    $('.modal').on('hidden.bs.modal', function(e){
+        if (typeof $(this).find('form')[0] !== 'undefined'){
+            $(this).find(".alert").fadeOut();
+            $(this).find('form')[0].reset();
+            initializeModalFunctions();
+        }
     });
 
 </script>
