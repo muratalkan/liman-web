@@ -29,6 +29,7 @@ class WebAppController
 		$webAppStatus = "enabled";
 		$httpPort = "80";
 		$sslConfiguration ="";
+
 		if(!empty(request("httpsStatus")) && !empty(request("SslCertStatus"))){
 			$httpPort = "443";
 			$sslConfiguration = request("SslCertStatus");
@@ -47,8 +48,8 @@ class WebAppController
 						switch($sslConfiguration){
 							case "no": //create self-signed ssl
 								$this->createSSLCertificate($webAppName);
-								$keyPath =  "/etc/nginx/ssl/".$webAppName.".ssl/".$webAppName.".key";
-								$crtPath = "/etc/nginx/ssl/".$webAppName.".ssl/".$webAppName.".crt";
+								$keyPath =  "/etc/ssl/private/".$webAppName."_web.key";
+								$crtPath = "/etc/ssl/certs/".$webAppName."_web.crt";
 								$https = "yes";
 								break;
 							case "yes": //use existing certificate
@@ -77,7 +78,9 @@ class WebAppController
 					true
 				);
 	
-				Command::runSudo("mkdir -p /var/www/".$webAppName."/html");
+				Command::runSudo('mkdir -p /var/www/{:webAppName}/html && sudo touch $_/index.php',[
+					'webAppName' => $webAppName
+				]);
 				updateWebAppConfig();
 				ServiceController::restartService("nginx"); //restart service after configurations
 
@@ -91,14 +94,17 @@ class WebAppController
 						'ftpUsers' => [],
 						'phpVersion' => $phpVersion,
 						'https' => $https,
+						'key_path' => $keyPath,
+						'crt_path' => $crtPath,
 						'status' => $webAppStatus
 					]);
 					writeWebApps($webApps);
+					
 					return respond(__("The web app has been added"), 200);
 				}
 
 			}else{
-				return respond(__("The web app  already exists!"), 201);
+				return respond(__("The web app already exists!"), 201);
 			}
 
 		}else{
@@ -141,22 +147,18 @@ class WebAppController
 		$webAppName = request('webAppName');
 
 		if($webAppName != null){
-			Command::runSudo('rm /etc/nginx/sites-available/{:webAppName}',[
-					'webAppName' => $webAppName
-			]);
-			Command::runSudo('rm /etc/nginx/sites-enabled/{:webAppName}',[
-					'webAppName' => $webAppName
-			]);
-			Command::runSudo('rm -rf /etc/nginx/ssl/{:webAppName}.ssl',[
-					'webAppName' => $webAppName
-			]);
-			Command::runSudo('rm -rf /var/www/{:webAppName}',[
-					'webAppName' => $webAppName
-			]);
-
-			FTPController::deleteUsers($webAppName);
-
 			$webApps = readWebApps();
+			$webApp = $webApps->first(function($value, $key) use($webAppName) {
+				return $value->webAppName == $webAppName;
+			});
+
+			removeDirectory('/var/www/'.$webAppName);
+			removeFile('/etc/nginx/sites-available/'.$webAppName);
+			removeFile('/etc/nginx/sites-enabled/'.$webAppName);
+			removeFile($webApp->key_path);
+			removeFile($webApp->crt_path);
+			FTPController::deleteUsers($webAppName);
+			
 			$webApps = $webApps->reject(function ($item, $key) use($webAppName){
 				return $item->webAppName == $webAppName;
 			});
@@ -169,18 +171,9 @@ class WebAppController
 	}
 
 	private function createSSLCertificate($webAppName){ 
-		validate([
-			'sslEmail' => 'required|email',
-			'sslCountryName' => 'required|string',
-			'sslStateName' => 'required|string',
-			'sslLocalName' => 'required|string',
-			'sslOrgName' => 'required|string',
-			'sslOrgUnitName' => 'required|string',
-			'sslCommonName' => 'required|string',
-		]);
-		
+
 		Data::instance()
-		->file('/etc/nginx/ssl/__sslcertificate.conf')
+		->file('/etc/nginx/__sslCertificate.conf')
 		->write(
 			[
 				'web_app_name' => $webAppName,
@@ -195,7 +188,6 @@ class WebAppController
 			true
 		);
 
-		Command::runSudo("mkdir -p /etc/nginx/ssl/".$webAppName.".ssl");
 		updateSSLConfig();
 	}
 
@@ -204,7 +196,7 @@ class WebAppController
 
 		if(!$testNginx){ 
 			$this->delete();
-			ServiceController::restartService("nginx"); //restart service if nginx fails 
+			ServiceController::restartService("nginx"); //restart nginx if it fails 
 		}
 		return $testNginx;
 	}
