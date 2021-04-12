@@ -46,50 +46,53 @@ class FTPController{
 		$ftpPassword = request("ftpPassword");
 		
 		if(InputValidations::isNameValid($ftpUsername)){
-			
-			//add group if it does not exist
-			$check = (bool) Command::runSudo('groupadd pureFtpdUsrGroup 2>/dev/null 1>/dev/null && echo 1 || echo 0');
-			if($check){
-				Command::runSudo('useradd -g pureFtpdUsrGroup -d /dev/null -s /etc pureFtpdUsr');
-			}
-			
-			//reconfigure permissions
-			Command::runSudo('chgrp pureFtpdUsrGroup -R /var/www');
-			Command::runSudo('chmod g+rw /var/www -R');
-
-			$result = (bool) Command::runSudo('printf "{:passwd}\n{:passwd}\n" | sudo pure-pw useradd {:username} -u pureFtpdUsr -d /var/www/{:webApp} 2>/dev/null 1>/dev/null && echo 1 || echo 0',[
-				'passwd' => $ftpPassword,
-				'username' => $ftpUsername,
-				'webApp' => $webAppName
-			]);
-			if($result){
-				Command::runSudo("pure-pw mkdb");
-
-				$verify1 = (bool) Command::runSudo('[ -f /etc/pure-ftpd/conf/PureDB ] && echo 1 || echo 0');
-				$verify2 = (bool) Command::runSudo('[ -f /etc/pure-ftpd/auth/PureDB ] && echo 1 || echo 0');
-				if($verify1){
-					if(!$verify2){
-						Command::runSudo('ln -s /etc/pure-ftpd/conf/PureDB /etc/pure-ftpd/auth/PureDB');
-						ServiceController::restartService("pure-ftpd");
-					}
-
-					$webApps = readWebApps();
-					$webApps->map(function ($item, $key) use($webAppName, $ftpUsername) {
-						if($item->webAppName == $webAppName){
-							array_push($item->ftpUsers, $ftpUsername);
-							$item->ftpUsers = array_unique($item->ftpUsers);
-						}
-					});
-					writeWebApps($webApps);
-					
-					return respond(__("The virtual FTP user has been added"), 200);
+			if(!$this->checkFTPUserExists($ftpUsername)){
+				//add group if it does not exist
+				$check = (bool) Command::runSudo('groupadd pureFtpdUsrGroup 2>/dev/null 1>/dev/null && echo 1 || echo 0');
+				if($check){
+					Command::runSudo('useradd -g pureFtpdUsrGroup -d /dev/null -s /etc pureFtpdUsr');
 				}
+			
+				//reconfigure permissions
+				Command::runSudo('chgrp pureFtpdUsrGroup -R /var/www');
+				Command::runSudo('chmod g+rw /var/www -R');
+
+				$result = (bool) Command::runSudo('printf "{:passwd}\n{:passwd}\n" | sudo pure-pw useradd {:username} -u pureFtpdUsr -d /var/www/{:webApp} 2>/dev/null 1>/dev/null && echo 1 || echo 0',[
+					'passwd' => $ftpPassword,
+					'username' => $ftpUsername,
+					'webApp' => $webAppName
+				]);
+				if($result){
+					Command::runSudo("pure-pw mkdb");
+					$verify1 = (bool) Command::runSudo('[ -f /etc/pure-ftpd/conf/PureDB ] && echo 1 || echo 0');
+					$verify2 = (bool) Command::runSudo('[ -f /etc/pure-ftpd/auth/PureDB ] && echo 1 || echo 0');
+					if($verify1){
+						if(!$verify2){
+							Command::runSudo('ln -s /etc/pure-ftpd/conf/PureDB /etc/pure-ftpd/auth/PureDB');
+							ServiceController::restartService("pure-ftpd");
+						}
+
+						$webApps = readWebApps();
+						$webApps->map(function ($item, $key) use($webAppName, $ftpUsername) {
+							if($item->webAppName == $webAppName){
+								array_push($item->ftpUsers, $ftpUsername);
+								$item->ftpUsers = array_unique($item->ftpUsers);
+							}
+						});
+						writeWebApps($webApps);
+					
+						return respond(__("The virtual FTP user has been created"), 200);
+					}
+				}
+			}else{
+				return respond(__("The virtual FTP user already exists!"), 201);
 			}
+			
 		}else{
-			return respond($webAppName.' '.__("is invalid! (It should not contain any Turkish characters, special characters or spaces)"), 201);
+			return respond($ftpUsername.' '.__("is invalid! (It should not contain any Turkish characters, special characters or spaces)"), 201);
 		}
 		
-		return respond(__("The virtual FTP user could not be added!"), 201);
+		return respond(__("The virtual FTP user could not be created!"), 201);
 	}
 	
 	public function resetUser(){
@@ -134,6 +137,16 @@ class FTPController{
 			return respond(__("The virtual FTP user has been deleted"), 200);
 		}
 		return respond(__("The virtual FTP user could not be deleted!"), 201);
+	}
+
+	private function checkFTPUserExists($ftpUser){
+		$output = Command::runSudo("pure-pw list | awk '{print$1}'");
+		$ftpUsers = explode("\n", $output);
+
+		if(array_search($ftpUser, $ftpUsers) !== false){
+			return true; //exists
+		}
+		return false; //does not exist
 	}
 
 	public static function deleteUsers($webAppName){
