@@ -28,6 +28,9 @@ if (!function_exists('checkPort')) {
 
 function updateWebAppConfig()
 {
+	createDirectoryIfNotExist("/etc/nginx/sites-available/");
+	createDirectoryIfNotExist("/etc/nginx/sites-enabled/");
+
 	Command::bindDefaultEngine();
 	$config = new Config();
 	$data = Data::instance()
@@ -47,19 +50,22 @@ function updateWebAppConfig()
 		->write(true);
 	
 	Command::runSudo("ln -s /etc/nginx/sites-available/".$data['web_app_name']." /etc/nginx/sites-enabled/");
-	
+
 }
 
 function updateSSLConfig()
 {
+	createDirectoryIfNotExist("/etc/ssl/certs/");
+	createDirectoryIfNotExist("/etc/ssl/private/");
+
 	Command::bindDefaultEngine();
 	$config = new Config();
 	$data = Data::instance()
-		->file('/etc/nginx/ssl/__sslcertificate.conf')
+		->file('/etc/nginx/__sslCertificate.conf')
 		->read(true);
 	$config
-		->folder("/etc/nginx/ssl/".$data['web_app_name'].".ssl")
-		->file($data['web_app_name'].".conf")
+		->folder("/etc/ssl")
+		->file($data['web_app_name']."_sslCert.conf")
 		->template('sslCertificate_conf')
 		->data(
 			array_merge(
@@ -71,21 +77,35 @@ function updateSSLConfig()
 		->write(true);
 
 	Command::runSudo( //10 years certificate
-		'openssl req -config /etc/nginx/ssl/{:webAppName}.ssl/{:webAppName}.conf -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/nginx/ssl/{:webAppName}.ssl/{:webAppName}.key -out /etc/nginx/ssl/@{:webAppName}.ssl/@{:webAppName}.crt',
+		'openssl req -config /etc/ssl/{:webAppName}_sslCert.conf -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/{:webAppName}_web.key -out /etc/ssl/certs/{:webAppName}_web.crt',
 		[
 			'webAppName' => $data['web_app_name']
 		]
 	);
 
+	removeFile("/etc/ssl/".$data['web_app_name']."_sslCert.conf");
 }
 
-function setNginxConfs(){
-	/*$verify = (bool) Command::runSudo('[ -d /etc/nginx/sites-available ] && echo 1 || echo 0');
-	if(!$verify){
-		Command::runSudo("mkdir -p /etc/nginx/sites-available");
-		ommand::runSudo("mkdir -p /etc/nginx/sites-enabled");
-	}*/
+function createDirectoryIfNotExist($path){
+	if(!(bool)Command::runSudo('[ -d '.$path.' ] && echo 1 || echo 0'))
+	{
+		Command::runSudo('mkdir -p '.$path);
+	}
+}
 
+function createFileIfNotExist($path){
+	if(!(bool)Command::runSudo('[ -f '.$path.' ] && echo 1 || echo 0'))
+	{
+		Command::runSudo('touch '.$path);
+	}
+}
+
+function removeDirectory($path){
+	Command::runSudo('rm -rf '.$path);
+}
+
+function removeFile($path){
+	Command::runSudo('rm '.$path);
 }
 
 function readWebApps(){
