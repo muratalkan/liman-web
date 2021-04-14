@@ -1,8 +1,8 @@
 {
-    "name": "Website",
+    "name": "Web",
     "publisher": "Administrator",
-    "version": "1.0.0",
-    "version_code": 7,
+    "version": "1.1.0",
+    "version_code": 10,
     "database": [],
     "widgets": [],
     "language": "php",
