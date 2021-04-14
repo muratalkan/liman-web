@@ -2,7 +2,7 @@
     "id" => "viewServiceModal",
     "title" => "Service Information",
     "footer" => [
-        "text" => "Configure Port",
+        "text" => __("Configure Port"),
         "class" => "btn-primary",
         "onclick" => "configureServicePort()"
     ]
