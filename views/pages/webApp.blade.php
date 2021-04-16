@@ -188,7 +188,7 @@
     function setBadges(){
         $('#webApp-table').find('th').eq(4).addClass("text-center");
         $('#webApp-table').find('th').eq(3).addClass("text-center");
-        $('#webApp-table').find('.table-body').find("[id='https']").each(function(){
+        $('#webApp-table').find('.table-body').find("td[id='https']").each(function(){
             $(this).addClass("text-center");
                 if($(this).text() == "yes"){
                     $(this).html(`<small class="badge badge-success"><i class="fas fa-check-circle"></i></small>`);
@@ -196,7 +196,7 @@
                     $(this).html(`<small class="badge badge-danger"><i class="fas fa-times-circle"></i></small>`);
                 }
             });
-        $('#webApp-table').find('.table-body').find("[id='status']").each(function(){
+        $('#webApp-table').find('.table-body').find("td[id='status']").each(function(){
             $(this).addClass("text-center");
             if($(this).text() == "enabled"){
                 $(this).html(`<small class="badge badge-primary">{{ __('Enabled')}}</small>`);
