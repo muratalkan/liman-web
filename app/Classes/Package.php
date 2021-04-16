@@ -3,7 +3,7 @@ namespace App\Classes;
 
 class Package
 {
-    public $name;
+	public $name;
 
     function __construct($name) {
         $this->name = $name;
@@ -14,7 +14,7 @@ class Package
     }
 
     function getName(){
-        return $this->$name;
+        return $this->name;
     }
 
 	public static function getPreInstalledPackage(){

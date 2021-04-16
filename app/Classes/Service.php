@@ -4,9 +4,6 @@ namespace App\Classes;
 class Service
 {
     public $name;
-    public $status;
-    public $programName;
-    public $portNumber;
 
     function __construct($name) {
         $this->name = $name;
@@ -17,7 +14,7 @@ class Service
     }
 
     function getName(){
-        return $this->$name;
+        return $this->name;
     }
 
 	public static function serviceWithPorts(){

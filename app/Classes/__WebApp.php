@@ -14,6 +14,6 @@ class WebApp
     }
 
     function getName(){
-        return $this->$name;
+        return $this->name;
     }
 }

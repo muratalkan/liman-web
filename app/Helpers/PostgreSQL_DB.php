@@ -13,7 +13,7 @@ class PostgreSQL_DB
 
 	public function __construct($db = null){
 		if ($db) {
-			$this->$database = $db;
+			$this->database = $db;
 		}
 	}
 
@@ -22,11 +22,11 @@ class PostgreSQL_DB
 	}
 
 	public function getDatabase(){
-		return $this->$database;
+		return $this->database;
 	}
 
 	public function setDatabase($db){
-		$this->$database = $db;
+		$this->database = $db;
 	}
 
 	public function database($db){
@@ -35,7 +35,7 @@ class PostgreSQL_DB
 	}
 
 	public function run($sql, $cmd){
-		return Command::runSudo("-u postgres psql -d {$this->$database} -c \"{$sql};\" {$cmd}");
+		return Command::runSudo("-u postgres psql -d {$this->database} -c \"{$sql};\" {$cmd}");
 	}
 
 	public static function getDefaultUsers(){
