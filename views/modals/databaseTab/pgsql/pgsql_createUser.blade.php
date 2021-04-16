@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="createPgSQLUserModal_form" onsubmit="return request('/extensionRun/create_pgsql_user', this, getPgSQLUsers)">
+        <form id="createPgSQLUserModal_form" onsubmit="return request(API('create_pgsql_user'), this, getPgSQLUsers)">
           <div id="createPgSQLUserModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
                 <label class="col-form-label">{{__('Username')}}<small> | {{__('Required')}}</small></label>

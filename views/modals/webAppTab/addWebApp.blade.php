@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="addWebAppModal_form" onsubmit="return request('/extensionRun/set_web_app', this, getWebApps)">
+        <form id="addWebAppModal_form" onsubmit="return request(API('set_web_app'), this, getWebApps)">
             <div id="addWebAppModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
                 <label class="col-form-label">{{__('Application Name')}}<small> | {{__('Required')}}</small></label>

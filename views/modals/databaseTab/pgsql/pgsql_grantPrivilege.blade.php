@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="grantPgSQLPrivilegesModal_form" onsubmit="return request('/extensionRun/grant_pgsql_privileges', this, getPgSQLContent)">
+        <form id="grantPgSQLPrivilegesModal_form" onsubmit="return request(API('grant_pgsql_privileges'), this, getPgSQLContent)">
         <div id="grantPgSQLPrivilegesModal_alert" class="alert" role="alert" hidden=""></div>
         <div class="form-group">
             <label class="col-form-label">{{__('User')}}</label>

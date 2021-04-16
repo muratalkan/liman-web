@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="createMySQLDBModal_form" onsubmit="return request('/extensionRun/create_mysql_database', this, getMySQLDatabases)">
+        <form id="createMySQLDBModal_form" onsubmit="return request(API('create_mysql_database'), this, getMySQLDatabases)">
             <div id="createMySQLDBModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
                 <label class="col-form-label">{{__('Database Name')}}<small> | {{__('Required')}}</small></label>

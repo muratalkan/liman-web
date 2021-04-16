@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="grantMySQLPrivilegesModal_form" onsubmit="return request('/extensionRun/grant_mysql_privileges', this, getMySQLUsers)">
+        <form id="grantMySQLPrivilegesModal_form" onsubmit="return request(API('grant_mysql_privileges'), this, getMySQLUsers)">
             <div id="grantMySQLPrivilegesModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
                 <label class="col-form-label">{{__('User')}}</label>

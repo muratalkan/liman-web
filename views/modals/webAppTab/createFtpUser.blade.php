@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="addFtpUserModal_form" onsubmit="return request('/extensionRun/create_ftp_user', this, getWebApps)">
+        <form id="addFtpUserModal_form" onsubmit="return request(API('create_ftp_user'), this, getWebApps)">
             <div id="addFtpUserModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group" id="ftpUserArea">
               <div class = "col-md-6 mx-auto text-center">

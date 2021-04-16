@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="createMySQLUserModal_form" onsubmit="return request('/extensionRun/create_mysql_user', this, getMySQLUsers)">
+        <form id="createMySQLUserModal_form" onsubmit="return request(API('create_mysql_user'), this, getMySQLUsers)">
         <div id="createMySQLUserModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
                 <label class="col-form-label">{{__('Username')}}</label>

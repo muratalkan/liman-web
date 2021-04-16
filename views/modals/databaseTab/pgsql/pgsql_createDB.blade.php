@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="createPgSQLDBModal_form" onsubmit="return request('/extensionRun/create_pgsql_database', this, getPgSQLDatabases)">
+        <form id="createPgSQLDBModal_form" onsubmit="return request(API('create_pgsql_database'), this, getPgSQLDatabases)">
             <div id="createPgSQLDBModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
                 <label class="col-form-label">{{__('Database Name')}}<small> | {{__('Required')}}</small></label>

@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="addDomainNameModal_form" onsubmit="return request('/extensionRun/add_domain_name', this, getWebApps)">
+        <form id="addDomainNameModal_form" onsubmit="return request(API('add_domain_name'), this, getWebApps)">
             <div id="addDomainNameModal_alert" class="alert" role="alert" hidden=""></div>
             <div class="form-group">
               <div class = "col-md-6 mx-auto text-center">
