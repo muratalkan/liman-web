@@ -23,3 +23,9 @@ Database - MySQL Tab </br>
 
 PHP Modules Tab </br>
 ![scr05](/screenshots/phpModulesTab.jpg)
+
+
+# Default Web Page
+<kbd>
+  <img src="/screenshots/defaultWebPage.jpg">
+</kbd>
