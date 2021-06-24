@@ -9,12 +9,16 @@ use App\DataManager\Data;
 use App\Controllers\ServiceController;
 use App\Controllers\FTPController;
 use App\Helpers\InputValidations;
+use App\Helpers\File;
 
 class WebAppController
 {
 	public function get()
 	{
 		$webApps = readWebApps();
+		/*File::instance()
+			->path($path)
+			->checkDirectoryExists()*/
 		return view('components.webAppTab.webApps-table', [
 			'webAppsData' => $webApps
 		]);
@@ -80,9 +84,12 @@ class WebAppController
 					true
 				);
 	
-				Command::runSudo('mkdir -p /var/www/{:webAppName}/html && sudo touch $_/index.php',[
-					'webAppName' => $webAppName
-				]);
+				File::instance()
+						->path("/var/www/".$webAppName."/html")
+						->createDirectory();
+				File::instance()
+						->path("/var/www/".$webAppName."/html/index.php")
+						->createFile();
 				updateWebAppConfig();
 				ServiceController::restartService("nginx"); //restart service after configurations
 
@@ -101,6 +108,9 @@ class WebAppController
 						'status' => $webAppStatus
 					]);
 					writeWebApps($webApps);
+
+					//Template index.php file
+					createTemplateWebPage($webAppName);
 					
 					return respond(__("The web app has been added"), 200);
 				}
@@ -121,7 +131,9 @@ class WebAppController
 		if($webAppName != null){
 			if(!$this->isWebAppEnabled($webAppName)){
 				$this->changeWebAppStatus($webAppName, "enabled");
-				Command::runSudo("ln -s /etc/nginx/sites-available/".$webAppName." /etc/nginx/sites-enabled/");
+				File::instance()
+						->path("/etc/nginx/sites-available/".$webAppName)
+						->createSymbolicLink("/etc/nginx/sites-enabled/");
 				return respond(__("The web app is enabled"), 200);
 			}
 			return respond(__("The web app is already enabled!"), 201);
@@ -136,7 +148,9 @@ class WebAppController
 		if($webAppName != null){
 			if($this->isWebAppEnabled($webAppName)){
 				$this->changeWebAppStatus($webAppName, "disabled");
-				Command::runSudo("rm /etc/nginx/sites-enabled/".$webAppName);
+				File::instance()
+						->path("/etc/nginx/sites-enabled/".$webAppName)
+						->removeFile();
 				return respond(__("The web app is disabled"), 200);
 			}
 			return respond(__("The web app is already disabled!"), 201);
@@ -154,18 +168,28 @@ class WebAppController
 				return $value->webAppName == $webAppName;
 			});
 
-			removeDirectory('/var/www/'.$webAppName);
-			removeFile('/etc/nginx/sites-available/'.$webAppName);
-			removeFile('/etc/nginx/sites-enabled/'.$webAppName);
-			removeFile($webApp->key_path);
-			removeFile($webApp->crt_path);
+			File::instance()
+					->path("/var/www/".$webAppName)
+					->removeDirectory();
+			File::instance()
+					->path("/etc/nginx/sites-available/".$webAppName)
+					->removeFile();
+			File::instance()
+					->path("/etc/nginx/sites-enabled/".$webAppName)
+					->removeFile();
+			File::instance()
+					->path($webApp->key_path)
+					->removeFile();
+			File::instance()
+					->path($webApp->crt_path)
+					->removeFile();
 			FTPController::deleteUsers($webAppName);
 			
 			$webApps = $webApps->reject(function ($item, $key) use($webAppName){
 				return $item->webAppName == $webAppName;
 			});
 			writeWebApps($webApps);
-
+			ServiceController::restartService("nginx");
 			return respond(__("The web app has been deleted"), 200);
 		}
 
@@ -204,6 +228,7 @@ class WebAppController
 	}
 
 	private function changeWebAppStatus($webAppName, $newStatus){
+		ServiceController::restartService("nginx");
 		$webApps = readWebApps();
 		$webApps->map(function ($item, $key) use($webAppName, $newStatus) {
 			if($item->webAppName == $webAppName){
@@ -214,20 +239,18 @@ class WebAppController
 	}
 
 	private function isWebAppEnabled($webAppName){
-		$isEnabled = (bool) Command::runSudo('[ -f /etc/nginx/sites-enabled/{:webAppName} ] && echo "1" || echo "0"',[
-			'webAppName' => $webAppName
-		]);
-		return $isEnabled;
+		return File::instance()
+						->path("/etc/nginx/sites-enabled/".$webAppName)
+						->checkFileExists();
 	}
 
 	private function checkWebAppExists($webAppName){
-		$verify1 = (bool) Command::runSudo('[ -d /var/www/{:webAppName} ] && echo "1" || echo "0"',[
-			'webAppName' => $webAppName
-		]);
-		$verify2 = (bool) Command::runSudo('[ -f /etc/nginx/sites-available/{:webAppName} ] && echo "1" || echo "0"',[
-			'webAppName' => $webAppName
-		]);
-
+		$verify1 = File::instance()
+						->path("/var/www/".$webAppName)
+						->checkDirectoryExists();
+		$verify2 = File::instance()
+						->path("/etc/nginx/sites-available/".$webAppName)
+						->checkFileExists();
 		if ($verify1 || $verify2) {
 			return true; //exists
 		}
