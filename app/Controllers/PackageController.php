@@ -22,10 +22,7 @@ class PackageController
 			)
 			->runSudo();
 
-		if ($check) {
-			return true;
-		} 
-		return false;
+		return $check;
 	}
 
 	public function install() {

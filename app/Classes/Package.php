@@ -21,10 +21,9 @@ class Package
 		return [
 			"'nginx'",
 			"'pure-ftpd'",
-			"'mysql-server'",
+			"'default-mysql-server'",
 			"'postgresql'",
 			"'openssl'",
-			"'phpmyadmin'",
 			"'lsof'"
 		];
 	}
@@ -33,11 +32,10 @@ class Package
 		return [
 			"nginx",
 			"pure-ftpd",
-			"mysql-server",
+			"default-mysql-server",
 			"postgresql-contrib",
 			"postgresql",
 			"openssl",
-			"phpmyadmin",
 			"lsof"
 		];
 	}
