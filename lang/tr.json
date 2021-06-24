@@ -38,6 +38,8 @@
 
 	"Web Applications" : "Web Uygulamaları",
 	"You can view the available web applications on this tab. Also, you can use the 'Add Application' button to add a new application and you can left or right click on the application that you want to make operation" : "Bu sekmeden mevcut web uygulamalarını görebilirsiniz. Ayrıca, yeni bir uygulama eklemek için 'Uygulama Ekle' butonunu kullanabilir ve işlem yapmak istediğiniz uygulamaya sol veya sağ tıklayarak işlem yapabilirsiniz",
+	"To view your websites in the browser, you must add the domain names to '/etc/hosts' file" : "Web sitelerinizi tarayıcıda görüntülemek için alan adlarını '/etc/hosts' dosyasına eklemeniz gerekmektedir",
+	"To view your HTTPS websites in the browser, you must to add 'https://' prefix" : "HTTPS web sitelerinizi tarayıcıda görüntülemek için 'https://' önekini eklemeniz gerekmektedir",
 	"Add Application" : "Uygulama Ekle",
 	"Domain Names" : "Alan Adları",
 	"Virtual FTP Users" : "Sanal FTP Kullanıcıları",
@@ -216,8 +218,8 @@
 	"An error occurred while processing your request" : "İsteğiniz yerine getirilirken bir hata oluştu",
 
 
-	"In order to use the extension, you have to install the necessary package on the server. You can install it using the 'Install Package' button below" : "Eklentiyi kullanabilmek için gerekli paketi sunucuya kurmanız gerekmektedir. Aşağıdaki yer alan 'Paket Yükle' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
-	"Install Package" : "Paket Yükle",
+	"In order to use the extension, you have to install the necessary package on the server. You can install it using the 'Install Package' button below" : "Eklentiyi kullanabilmek için gerekli paketi sunucuya kurmanız gerekmektedir. Aşağıdaki yer alan 'Paketi Kur' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
+	"Install Package" : "Paketi Kur",
 	"Package Installer" : "Paket Yükleyici"
 
 }
