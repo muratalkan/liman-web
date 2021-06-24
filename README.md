@@ -1,6 +1,6 @@
 # Liman MYS | Web Extension
 
-Supported Linux Distributions: **Debian** & **CentOS** (in progress)
+Tested on Ubuntu Server 18.04 and Pardus Server 19.5
 
 For more information:
 - https://liman.havelsan.com.tr/
