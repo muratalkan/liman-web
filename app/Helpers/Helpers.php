@@ -7,6 +7,7 @@ use Liman\Toolkit\OS\Distro;
 use Liman\Toolkit\Shell\Command;
 use App\Classes\Php;
 use App\Classes\Module;
+use App\Helpers\File;
 
 if (!function_exists('checkPort')) {
 	function checkPort($ip, $port)
@@ -28,8 +29,12 @@ if (!function_exists('checkPort')) {
 
 function updateWebAppConfig()
 {
-	createDirectoryIfNotExist("/etc/nginx/sites-available/");
-	createDirectoryIfNotExist("/etc/nginx/sites-enabled/");
+	File::instance()
+			->path("/etc/nginx/sites-available/")
+			->createDirectory();
+	File::instance()
+			->path("/etc/nginx/sites-enabled/")
+			->createDirectory();
 
 	Command::bindDefaultEngine();
 	$config = new Config();
@@ -49,14 +54,19 @@ function updateWebAppConfig()
 		)
 		->write(true);
 	
-	Command::runSudo("ln -s /etc/nginx/sites-available/".$data['web_app_name']." /etc/nginx/sites-enabled/");
-
+	File::instance()
+			->path("/etc/nginx/sites-available/".$data['web_app_name'])
+			->createSymbolicLink("/etc/nginx/sites-enabled/");
 }
 
 function updateSSLConfig()
 {
-	createDirectoryIfNotExist("/etc/ssl/certs/");
-	createDirectoryIfNotExist("/etc/ssl/private/");
+	File::instance()
+			->path("/etc/ssl/certs/")
+			->createDirectory();
+	File::instance()
+			->path("/etc/ssl/private/")
+			->createDirectory();
 
 	Command::bindDefaultEngine();
 	$config = new Config();
@@ -83,29 +93,9 @@ function updateSSLConfig()
 		]
 	);
 
-	removeFile("/etc/ssl/".$data['web_app_name']."_sslCert.conf");
-}
-
-function createDirectoryIfNotExist($path){
-	if(!(bool)Command::runSudo('[ -d '.$path.' ] && echo 1 || echo 0'))
-	{
-		Command::runSudo('mkdir -p '.$path);
-	}
-}
-
-function createFileIfNotExist($path){
-	if(!(bool)Command::runSudo('[ -f '.$path.' ] && echo 1 || echo 0'))
-	{
-		Command::runSudo('touch '.$path);
-	}
-}
-
-function removeDirectory($path){
-	Command::runSudo('rm -rf '.$path);
-}
-
-function removeFile($path){
-	Command::runSudo('rm '.$path);
+	File::instance()
+			->path("/etc/ssl/".$data['web_app_name']."_sslCert.conf")
+			->removeFile();
 }
 
 function readWebApps(){
@@ -154,4 +144,14 @@ function getPhpAndModules(){
 	}
 
 	return $result;
+}
+
+function createTemplateWebPage($webAppName){
+	Command::runSudo(
+		"bash -c \"echo @{:fileContent} | base64 -d | tee  @{:filePath}\"",
+		[
+			'fileContent' => base64_encode(file_get_contents(getPath("app/Templates/limanWeb.blade.php"))),
+			'filePath' => "/var/www/".$webAppName."/html/index.php"
+		]
+	);
 }
