@@ -10,8 +10,8 @@
 
 <script>
 
-    function resetFtpUser(line){
-        var ftpUser = line.querySelector('#username').innerHTML;
+    function resetFtpUser(row){
+        var ftpUser = row.querySelector('#username').innerHTML;
         Swal.fire({
             title: ftpUser,
             text: "{{ __('Enter a new password to reset and change the password for this virtual FTP user') }}.",
@@ -33,7 +33,7 @@
                     request("{{API('reset_ftp_user')}}", formData, function(response) {
                         const message = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Changed!') }}", text: message, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getFtpUsers(line); }, 1000);
+                        setTimeout(function() { getFtpUsers(row); }, 1000);
                     }, function(response) {
                         const error = JSON.parse(response).message;
                         Swal.fire("{{ __('Error!') }}", error, "error");
@@ -44,8 +44,8 @@
         });
     }
 
-    function deleteFtpUser(line){
-        var ftpUser = line.querySelector('#username').innerHTML;
+    function deleteFtpUser(row){
+        var ftpUser = row.querySelector('#username').innerHTML;
         Swal.fire({
             title: ftpUser,
             text: "{{ __('Are you sure you want to delete the FTP user?') }}",
@@ -57,13 +57,13 @@
               preConfirm: () => {
                 return new Promise((resolve) => {
                     let formData = new FormData();
-                    const webAppName = line.querySelector('#webAppName').innerHTML;
+                    const webAppName = row.querySelector('#webAppName').innerHTML;
                     formData.append("webAppName", webAppName);
                     formData.append("ftpUsername", ftpUser);
                     request("{{API('delete_ftp_user')}}", formData, function(response) {
                         const message = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Deleted!') }}", text: message, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getFtpUsers(line); }, 1000);
+                        setTimeout(function() { getFtpUsers(row); }, 1000);
                     }, function(response) {
                         const error = JSON.parse(response).message;
                         Swal.fire("{{ __('Error!') }}", error, "error");

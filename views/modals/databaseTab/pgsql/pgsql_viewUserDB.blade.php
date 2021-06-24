@@ -11,8 +11,8 @@
 
 <script>
 
-function revokePgSQLDBPrivilege(line){
-        var databaseName = line.querySelector('#dbName').innerHTML;
+function revokePgSQLDBPrivilege(row){
+        var databaseName = row.querySelector('#dbName').innerHTML;
         Swal.fire({
             title: databaseName,
             text: "{{ __('Are you sure you want to revoke PostgreSQL database privilege?') }}",
@@ -24,13 +24,13 @@ function revokePgSQLDBPrivilege(line){
               preConfirm: () => {
                 return new Promise((resolve) => {
                     let formData = new FormData();
-                    const dbUser = line.querySelector('#userName').innerHTML;
+                    const dbUser = row.querySelector('#userName').innerHTML;
                     formData.append("userName", dbUser);
                     formData.append("databaseName", databaseName);
                     request("{{API('revoke_pgsql_dbprivilege')}}", formData, function(response) {
                         const output = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Revoked!') }}", text: output, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getPgSQLUserDatabases(line); }, 1000);
+                        setTimeout(function() { getPgSQLUserDatabases(row); }, 1000);
                     }, function(response) {
                         const error = JSON.parse(response).message;
                         Swal.fire("{{ __('Error!') }}", error, "error");

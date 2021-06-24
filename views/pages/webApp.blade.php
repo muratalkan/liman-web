@@ -13,12 +13,14 @@
                 <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#addWebAppModal"> <i class="fas fa-plus mr-1"></i>{{ __('Add Application')}}</button>
                 <br><br>
                 <div id="webApp-table" class="table-content">
+                    
                     <div class="table-body"> </div>
                     <div class="overlay">
                         <div class="spinner-border" role="status">
                             <span class="sr-only">{{__('Loading')}}...</span>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -47,8 +49,8 @@
         
     }
 
-    function getDomainNames(line){
-        var webAppName = line.querySelector('#webAppName').innerHTML;
+    function getDomainNames(row){
+        var webAppName = row.querySelector('#webAppName').innerHTML;
         let formData = new FormData();
         formData.append("webAppName", webAppName);
         request("{{API('get_domain_names')}}", formData, function(response) {
@@ -62,8 +64,8 @@
         });
     }
 
-    function getFtpUsers(line){
-        var webAppName = line.querySelector('#webAppName').innerHTML;
+    function getFtpUsers(row){
+        var webAppName = row.querySelector('#webAppName').innerHTML;
         let formData = new FormData();
         formData.append("webAppName", webAppName);
         request("{{API('get_ftp_users')}}", formData, function(response) {
@@ -77,8 +79,8 @@
         });
     }
 
-    function setViewAlert(line){
-        var webAppName = line.querySelector('#webAppName').innerHTML;
+    function setViewAlert(row){
+        var webAppName = row.querySelector('#webAppName').innerHTML;
         Swal.fire({
             title: webAppName,
             text: "{{ __('Select the item you want to view') }}",
@@ -93,17 +95,17 @@
               preConfirm: (result) => {
                 return new Promise(() => {
                   if(result == 'domainName'){
-                      getDomainNames(line);
+                      getDomainNames(row);
                   }else if(result == 'ftpUser'){
-                      getFtpUsers(line);
+                      getFtpUsers(row);
                   }
                 })
               }
         });
     }
 
-    function enableWebApp(line){
-        var webAppName = line.querySelector('#webAppName').innerHTML;
+    function enableWebApp(row){
+        var webAppName = row.querySelector('#webAppName').innerHTML;
         Swal.fire({
             title: webAppName,
             text: "{{ __('Are you sure you want to enable the web app?') }}",
@@ -129,8 +131,8 @@
         });
     }
 
-    function disableWebApp(line){
-        var webAppName = line.querySelector('#webAppName').innerHTML;
+    function disableWebApp(row){
+        var webAppName = row.querySelector('#webAppName').innerHTML;
         Swal.fire({
             title: webAppName,
             text: "{{ __('Are you sure you want to disable the web app?') }}",
@@ -156,8 +158,8 @@
         });
     }
 
-    function deleteWebApp(line){
-        var webAppName = line.querySelector('#webAppName').innerHTML;
+    function deleteWebApp(row){
+        var webAppName = row.querySelector('#webAppName').innerHTML;
         Swal.fire({
             title: webAppName,
             text: "{{ __('Are you sure you want to delete the web app?') }}",

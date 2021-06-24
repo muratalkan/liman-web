@@ -77,9 +77,9 @@
         });
     }
 
-    function getPgSQLUserDatabases(line){
+    function getPgSQLUserDatabases(row){
         showSwal('{{__("Loading")}}...','info');
-        var dbusername = line.querySelector('#userName').innerHTML;
+        var dbusername = row.querySelector('#userName').innerHTML;
         let formData = new FormData();
         formData.append("userName", dbusername);
         request("{{API('get_pgsql_user_databases')}}", formData, function(response) {
@@ -93,9 +93,9 @@
         });
     }
 
-    function getPgSQLDBTables(line){
+    function getPgSQLDBTables(row){
         showSwal('{{__("Loading")}}...','info');
-        var databaseName = line.querySelector('#dbName').innerHTML;
+        var databaseName = row.querySelector('#dbName').innerHTML;
         let formData = new FormData();
         formData.append("databaseName", databaseName);
         request("{{API('get_pgsql_dbtables')}}", formData, function(response) {
@@ -109,8 +109,8 @@
         });
     }
 
-    function deletePgSQLUser(line){
-        var username = line.querySelector('#userName').innerHTML;
+    function deletePgSQLUser(row){
+        var username = row.querySelector('#userName').innerHTML;
         Swal.fire({
             title: username,
             text: "{{ __('Are you sure you want to delete the PostgreSQL user?') }}",
@@ -138,8 +138,8 @@
     }
 
 
-    function deletePgSQLDatabase(line){
-        var databaseName = line.querySelector('#dbName').innerHTML;
+    function deletePgSQLDatabase(row){
+        var databaseName = row.querySelector('#dbName').innerHTML;
         Swal.fire({
             title: databaseName,
             text: "{{ __('Are you sure you want to delete the PostgreSQL database?') }}",
@@ -156,8 +156,8 @@
                         const output = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Deleted!') }}", text: output, type: "success", showConfirmButton: false});
                         setTimeout(function() { 
-                            if(line.querySelector('#userName')){
-                                getPgSQLUserDatabases(line); 
+                            if(row.querySelector('#userName')){
+                                getPgSQLUserDatabases(row); 
                             }
                             getPgSQLDatabases(); 
                         }, 1000);
@@ -171,8 +171,8 @@
         });
     }
 
-    function revokePgSQLAllPrivileges(line){
-        var username = line.querySelector('#userName').innerHTML;
+    function revokePgSQLAllPrivileges(row){
+        var username = row.querySelector('#userName').innerHTML;
         Swal.fire({
             title: username,
             text: "{{ __('Are you sure you want to revoke all privileges of the PostgreSQL user?') }}",

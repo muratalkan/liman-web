@@ -11,8 +11,8 @@
 
 <script>
 
-function deleteMySQLDBTable(line){
-        var tableName = line.querySelector('#tableName').innerHTML;
+function deleteMySQLDBTable(row){
+        var tableName = row.querySelector('#tableName').innerHTML;
         Swal.fire({
             title: tableName,
             text: "{{ __('Are you sure you want to delete the MySQL database table?') }}",
@@ -24,13 +24,13 @@ function deleteMySQLDBTable(line){
               preConfirm: () => {
                 return new Promise((resolve) => {
                     let formData = new FormData();
-                    const databaseName = line.querySelector('#dbName').innerHTML;
+                    const databaseName = row.querySelector('#dbName').innerHTML;
                     formData.append("databaseName", databaseName);
                     formData.append("tableName", tableName);
                     request("{{API('drop_mysql_dbtable')}}", formData, function(response) {
                         const output = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Deleted!') }}", text: output, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getMySQLDBTables(line); }, 1000);
+                        setTimeout(function() { getMySQLDBTables(row); }, 1000);
                     }, function(response) {
                         const error = JSON.parse(response).message;
                         Swal.fire("{{ __('Error!') }}", error, "error");

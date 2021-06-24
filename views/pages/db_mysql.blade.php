@@ -78,10 +78,10 @@
         });
     }
 
-    function getMySQLUserDatabases(line){
+    function getMySQLUserDatabases(row){
         showSwal('{{__("Loading")}}...','info');
-        var dbusername = line.querySelector('#userName').innerHTML;
-        var dbhostname = line.querySelector('#hostName').innerHTML;
+        var dbusername = row.querySelector('#userName').innerHTML;
+        var dbhostname = row.querySelector('#hostName').innerHTML;
         let formData = new FormData();
         formData.append("userName", dbusername);
         formData.append("hostName", dbhostname);
@@ -96,9 +96,9 @@
         });
     }
 
-    function getMySQLDBTables(line){
+    function getMySQLDBTables(row){
         showSwal('{{__("Loading")}}...','info');
-        var databaseName = line.querySelector('#dbName').innerHTML;
+        var databaseName = row.querySelector('#dbName').innerHTML;
         let formData = new FormData();
         formData.append("databaseName", databaseName);
         request("{{API('get_mysql_dbtables')}}", formData, function(response) {
@@ -112,9 +112,9 @@
         });
     }
 
-    function deleteMySQLUser(line){
-        var username = line.querySelector('#userName').innerHTML;
-        var hostname = line.querySelector('#hostName').innerHTML;
+    function deleteMySQLUser(row){
+        var username = row.querySelector('#userName').innerHTML;
+        var hostname = row.querySelector('#hostName').innerHTML;
         Swal.fire({
             title: `${username}@${hostname}`,
             text: "{{ __('Are you sure you want to delete the MySQL user?') }}",
@@ -142,8 +142,8 @@
         });
     }
 
-    function deleteMySQLDatabase(line){
-        var databaseName = line.querySelector('#dbName').innerHTML;
+    function deleteMySQLDatabase(row){
+        var databaseName = row.querySelector('#dbName').innerHTML;
         Swal.fire({
             title: databaseName,
             text: "{{ __('Are you sure you want to delete the MySQL database?') }}",
@@ -160,8 +160,8 @@
                         const output = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Deleted!') }}", text: output, type: "success", showConfirmButton: false});
                         setTimeout(function() { 
-                            if(line.querySelector('#userName')){
-                                getMySQLUserDatabases(line); 
+                            if(row.querySelector('#userName')){
+                                getMySQLUserDatabases(row); 
                             }
                             getMySQLDatabases(); 
                         }, 1000);
@@ -175,9 +175,9 @@
         });
     }
 
-    function revokeMySQLAllPrivileges(line){
-        var username = line.querySelector('#userName').innerHTML;
-        var hostname = line.querySelector('#hostName').innerHTML;
+    function revokeMySQLAllPrivileges(row){
+        var username = row.querySelector('#userName').innerHTML;
+        var hostname = row.querySelector('#hostName').innerHTML;
         Swal.fire({
             title: `${username}@${hostname}`,
             text: "{{ __('Are you sure you want to revoke all privileges of the MySQL user?') }}",
