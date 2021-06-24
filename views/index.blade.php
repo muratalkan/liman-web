@@ -23,8 +23,6 @@ if (!$checkPackage) {
         "databases" => [
             "title" => __('Databases'),
             "icon" => "fas fa-database",
-            "view" => "databases",
-            "onclick" => "",
             "notReload" => true,
             "subTabs" => [
                 "db_pgsql" => [

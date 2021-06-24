@@ -37,7 +37,7 @@ server {
         #
         # include snippets/snakeoil.conf;
 
-        root /var/www/{{$web['web_app_name']}}/html;
+        root '/var/www/{{$web["web_app_name"]}}/html';
 
         # Add index.php to the list if you are using PHP
         index index.php index.html index.htm index.nginx-debian.html;
@@ -46,8 +46,8 @@ server {
 
 @if($web['http_port'] != '80')
         ssl on;
-        ssl_certificate {{$web['crt_path']}};
-        ssl_certificate_key {{$web['key_path']}};
+        ssl_certificate '{{$web["crt_path"]}}';
+        ssl_certificate_key '{{$web["key_path"]}}';
 @endif
 
         location / {

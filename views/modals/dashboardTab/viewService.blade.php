@@ -35,7 +35,7 @@
                  </div>
             </div>
             <div class="card-body collapsed p-0">
-                <div style="height:250px; overflow-y: auto;" id="serviceViewStatus"> </div>
+                <div style="height:250px; overflow-y: auto; background:black;" id="serviceViewStatus"> </div>
             </div>
             <div class="overlay">
                 <div class="spinner-border" role="status">
