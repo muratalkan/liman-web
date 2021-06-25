@@ -85,7 +85,7 @@
         request("{{API('get_pgsql_user_databases')}}", formData, function(response) {
             $('#pgsqlUserDB-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
-            $('#viewPgSQLUserDBModal').find('.modal-header').html('<h4><strong>'+dbusername+'</strong> | PostgreSQL | {{__("Authorized Databases")}} </h4>');
+            changeModalTitle('viewPgSQLUserDBModal', '<h4><strong>'+dbusername+'</strong> | PostgreSQL | {{__("Authorized Databases")}} </h4>');
             $('#viewPgSQLUserDBModal').modal('show');
         },function(response) {
             const error = JSON.parse(response).message;
@@ -101,7 +101,7 @@
         request("{{API('get_pgsql_dbtables')}}", formData, function(response) {
             $('#pgsqlDBTable-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
-            $('#viewPgSQLDBTableModal').find('.modal-header').html('<h4><strong>'+databaseName+'</strong> | PostgreSQL | {{__("Database Tables")}} </h4>');
+            changeModalTitle('viewPgSQLDBTableModal', '<h4><strong>'+databaseName+'</strong> | PostgreSQL | {{__("Database Tables")}} </h4>');
             $('#viewPgSQLDBTableModal').modal('show');
         }, function(response) {
             const error = JSON.parse(response).message;

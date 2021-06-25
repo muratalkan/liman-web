@@ -40,4 +40,13 @@
         }
     });
 
+    function changeModalTitle(modalID, title){
+        $('#'+modalID).find('.modal-header').html(`
+                    ${title}
+            <button type="button" class="close" aria-label="Close" onclick="closeCurrentModal('${modalID}')">
+                <span aria-hidden="true">×</span>
+            </button>
+        `);
+    }
+
 </script>

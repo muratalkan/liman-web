@@ -55,7 +55,7 @@
         formData.append("webAppName", webAppName);
         request("{{API('get_domain_names')}}", formData, function(response) {
             $('#domainName-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
-            $('#viewDomainNamesModal').find('.modal-header').html('<h4><strong>'+webAppName+'</strong> | {{__("Domain Names")}} </h4>');
+            changeModalTitle('viewDomainNamesModal', '<h4><strong>'+webAppName+'</strong> | {{__("Domain Names")}} </h4>');
             Swal.close();
             $('#viewDomainNamesModal').modal('show');
         }, function(response) {
@@ -70,7 +70,7 @@
         formData.append("webAppName", webAppName);
         request("{{API('get_ftp_users')}}", formData, function(response) {
             $('#ftpUser-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
-            $('#viewFtpUsersModal').find('.modal-header').html('<h4><strong>'+webAppName+'</strong> | {{__("Virtual FTP Users")}} </h4>');
+            changeModalTitle('viewFtpUsersModal', '<h4><strong>'+webAppName+'</strong> | {{__("Virtual FTP Users")}} </h4>');
             Swal.close();
             $('#viewFtpUsersModal').modal('show');
         }, function(response) {

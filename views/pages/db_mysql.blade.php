@@ -88,7 +88,7 @@
         request("{{API('get_mysql_user_databases')}}", formData, function(response) {
             $('#mysqlUserDB-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
-            $('#viewMySQLUserDBModal').find('.modal-header').html('<h4><strong>'+dbusername+'@'+dbhostname+'</strong> | MySQL | {{__("Authorized Databases")}} </h4>');
+            changeModalTitle('viewMySQLUserDBModal', '<h4><strong>'+dbusername+'@'+dbhostname+'</strong> | MySQL | {{__("Authorized Databases")}} </h4>');
             $('#viewMySQLUserDBModal').modal('show');
         }, function(response) {
             const error = JSON.parse(response).message;
@@ -104,7 +104,7 @@
         request("{{API('get_mysql_dbtables')}}", formData, function(response) {
             $('#mysqlDBTable-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
-            $('#viewMySQLDBTableModal').find('.modal-header').html('<h4><strong>'+databaseName+'</strong> | MySQL | {{__("Database Tables")}} </h4>');
+            changeModalTitle('viewMySQLDBTableModal', '<h4><strong>'+databaseName+'</strong> | MySQL | {{__("Database Tables")}} </h4>');
             $('#viewMySQLDBTableModal').modal('show');
         }, function(response) {
             const error = JSON.parse(response).message;

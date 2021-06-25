@@ -6,8 +6,8 @@
     <div class="table-body"> </div>
 </div>
 
-<small class="text-muted">{{__("To view your websites in the browser, you must add the domain names to '/etc/hosts' file") }}.</small>
-<br><small class="text-muted">{{__("To view your HTTPS websites in the browser, you must to add 'https://' prefix") }}.</small>      
+<small class="text-muted">*{{__("To view your websites in the browser, you must add the domain names to '/etc/hosts' file") }}.</small>
+<br><small class="text-muted">*{{__("To view your HTTPS websites in the browser, you must to add 'https://' prefix") }}.</small>      
 
 @endcomponent
 
