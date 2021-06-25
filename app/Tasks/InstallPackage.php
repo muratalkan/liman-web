@@ -12,7 +12,7 @@ use App\Classes\Module;
 
 class InstallPackage extends Task
 {
-	protected $description = 'Installing package...';
+	protected $description = 'Installing packages...';
 	protected $sudoRequired = true;
 
 	public function __construct(array $attrbs=[])

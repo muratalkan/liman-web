@@ -1,8 +1,8 @@
 <div class="alert alert-info" role="alert">
-  <i class="fas fa-info-circle mr-2"></i>{{__("In order to use the extension, you have to install the necessary package on the server. You can install it using the 'Install Package' button below")}}.
+  <i class="fas fa-info-circle mr-2"></i>{{__("In order to use this extension, you must install the necessary packages on the server. You can install it by clicking on 'Install Packages' button below")}}.
 </div>
 
-<button id="installPackageButton" class="btn btn-secondary" onclick="installPackages()">{{__("Install Package")}}</button>
+<button id="installPackageButton" class="btn btn-secondary" onclick="installPackages()">{{__("Install Packages")}}</button>
 
 @component('modal-component',[
     "id" => "packageInstallerModal",

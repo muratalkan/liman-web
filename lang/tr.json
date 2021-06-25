@@ -218,8 +218,8 @@
 	"An error occurred while processing your request" : "İsteğiniz yerine getirilirken bir hata oluştu",
 
 
-	"In order to use the extension, you have to install the necessary package on the server. You can install it using the 'Install Package' button below" : "Eklentiyi kullanabilmek için gerekli paketi sunucuya kurmanız gerekmektedir. Aşağıdaki yer alan 'Paketi Kur' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
-	"Install Package" : "Paketi Kur",
+	"In order to use this extension, you must install the necessary packages on the server. You can install it by clicking on 'Install Packages' button below" : "Bu eklentiyi kullanabilmek için gerekli paketleri sunucuya yüklemeniz gerekmektedir. Aşağıdaki yer alan 'Paketleri Yükle' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
+	"Install Packages" : "Paketleri Yükle",
 	"Package Installer" : "Paket Yükleyici"
 
 }
