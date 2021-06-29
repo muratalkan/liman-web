@@ -218,7 +218,7 @@
 	"An error occurred while processing your request" : "İsteğiniz yerine getirilirken bir hata oluştu",
 
 
-	"In order to use this extension, you must install the necessary packages on the server. You can install it by clicking on 'Install Packages' button below" : "Bu eklentiyi kullanabilmek için gerekli paketleri sunucuya yüklemeniz gerekmektedir. Aşağıdaki yer alan 'Paketleri Yükle' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
+	"In order to use this extension, you must install the some packages on the server. You can install it by clicking on 'Install Packages' button below" : "Bu eklentiyi kullanabilmek için bazı paketleri sunucuya yüklemeniz gerekmektedir. Aşağıdaki yer alan 'Paketleri Yükle' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
 	"Install Packages" : "Paketleri Yükle",
 	"Package Installer" : "Paket Yükleyici"
 

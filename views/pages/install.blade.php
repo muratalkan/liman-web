@@ -1,5 +1,5 @@
 <div class="alert alert-info" role="alert">
-  <i class="fas fa-info-circle mr-2"></i>{{__("In order to use this extension, you must install the necessary packages on the server. You can install it by clicking on 'Install Packages' button below")}}.
+  <i class="fas fa-info-circle mr-2"></i>{{__("In order to use this extension, you must install the some packages on the server. You can install it by clicking on 'Install Packages' button below")}}.
 </div>
 
 <button id="installPackageButton" class="btn btn-secondary" onclick="installPackages()">{{__("Install Packages")}}</button>

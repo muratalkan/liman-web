@@ -44,7 +44,7 @@
         $('#'+modalID).find('.modal-header').html(`
                     ${title}
             <button type="button" class="close" aria-label="Close" onclick="closeCurrentModal('${modalID}')">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true">&times;</span>
             </button>
         `);
     }
