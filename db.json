@@ -5,14 +5,15 @@
     "version_code": 12,
     "database": [],
     "widgets": [],
+    "mail_tags": [],
     "language": "php",
     "status": 0,
     "service": null,
-    "supportedLiman": "1.5.2",
+    "supportedLiman": "1.7.0",
     "support": "administrator@liman.dev",
     "icon": "fas fa-globe",
-    "require_key": "true",
+    "require_key": "false",
     "verification": null,
-    "dependencies": null,
-    "sslPorts": null
+    "sslPorts": null,
+    "dependencies": "nginx pure-ftpd default-mysql-server openssl lsof php7.3 php7.3-fpm"
 }
