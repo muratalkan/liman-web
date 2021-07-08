@@ -1,7 +1,7 @@
 {
     "name": "Web",
     "publisher": "Administrator",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "version_code": 12,
     "database": [],
     "widgets": [],
@@ -11,7 +11,7 @@
     "supportedLiman": "1.5.2",
     "support": "administrator@liman.dev",
     "icon": "fas fa-globe",
-    "require_key": "false",
+    "require_key": "true",
     "verification": null,
     "dependencies": null,
     "sslPorts": null
