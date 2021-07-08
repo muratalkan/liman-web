@@ -131,14 +131,12 @@
         request("{{API('check_service')}}", data, function(response) {
             const service = JSON.parse(response).message;
             $('#service_area').find("."+service+"-status-badge").find("a").text('{{__('Active')}}');
-            $('#service_area').find("."+service+"-status-badge").removeClass('badge-secondary');
-            $('#service_area').find("."+service+"-status-badge").addClass('badge-success');
+            $('#service_area').find("."+service+"-status-badge").removeClass('badge-secondary').addClass('badge-success');
             $('#service_area').find("."+service+"-status-badge").find(".spinner-grow").hide();
         }, function(response) {
             const service = JSON.parse(response).message;
             $('#service_area').find("."+service+"-status-badge").find("a").text('{{__('Inactive')}}');
-            $('#service_area').find("."+service+"-status-badge").removeClass('badge-success');
-            $('#service_area').find("."+service+"-status-badge").addClass('badge-secondary');
+            $('#service_area').find("."+service+"-status-badge").removeClass('badge-success').addClass('badge-secondary');
             $('#service_area').find("."+service+"-status-badge").find(".spinner-grow").hide();
         });
     }
