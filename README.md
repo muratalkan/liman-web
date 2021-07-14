@@ -27,5 +27,5 @@ PHP Modules Tab </br>
 
 # Default Web Page
 <kbd>
-  <img src="/screenshots/defaultWebPage.jpg">
+  <img src="/screenshots/defaultWebpage.jpg">
 </kbd>
