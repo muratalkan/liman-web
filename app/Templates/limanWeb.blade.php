@@ -11,9 +11,9 @@
         </style>
      </head>
      <body>
-        <h1>Liman MYS Default Web Page</h1>
-        <p>Eğer bu sayfayı görüyorsanız, nginx ayarları ve domain ekleme işlemi başarılıdır.</p>
-        <p>Daha fazla bilgi için:
-        <a href="https://www.liman.dev/">liman.dev</a><br/>
+        <h1>Welcome to Liman</h1>
+        <p>If you see this page, the nginx configurations are successful.</p>
+        <p>Further information is available at <a href="https://www.liman.dev/" target="_blank">liman.dev</a>.</p>
+        <p><em>Thank you for using Liman.</em></p>
      </body>
 </html>
