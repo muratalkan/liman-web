@@ -27,28 +27,24 @@ class FirewallController
 	public function check(){
 		$service = request('service');
 		$ports = Service::serviceWithUFWPorts()[$service]['PortName'];
-		$notConfigured = false;
 
 		foreach($ports as $port){
-			$check = (bool) Command::runSudo("ufw status | grep 'ALLOW' | grep 'Anywhere' | grep 'Anywhere (v6)' | awk '{print $1}' | grep @{:servicePort} 2>/dev/null 1>/dev/null && echo 1 || echo 0",[
+			$check = (bool) Command::runSudo("ufw status | grep 'ALLOW' | grep 'Anywhere' | grep @{:servicePort} 2>/dev/null 1>/dev/null && echo 1 || echo 0",[
 				'servicePort' => $port
 			]);
 	
+			$result = -1; //not configured
 			if($check){
-				$result = "allowed";
+				$result = 1; //allowed
 			}else{
-				$check = (bool) Command::runSudo("ufw status | grep 'DENY' | grep 'Anywhere' | grep 'Anywhere (v6)' | awk '{print $1}' | grep @{:servicePort} 2>/dev/null 1>/dev/null && echo 1 || echo 0",[
+				$check = (bool) Command::runSudo("ufw status | grep 'DENY' | grep 'Anywhere' | grep @{:servicePort} 2>/dev/null 1>/dev/null && echo 1 || echo 0",[
 					'servicePort' => $port
 				]);
 				if($check){ //denied
-					$result = "denied";
-				}else{ //not configured
-					$notConfigured = true;
+					$result = 0;
 				}
 			}
 		}
-
-		if($notConfigured){ $result = "not configured"; }
 
 		return respond($result, 200);
 	}

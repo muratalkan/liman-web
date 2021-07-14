@@ -233,8 +233,8 @@
         request("{{API('check_firewall')}}", data, function(response) {
             const status = JSON.parse(response).message;
             let badge = ['{{__("Not configured")}}','secondary','success','danger'];
-            if(status === 'allowed'){ badge = ['{{__("Allowed")}}','success','danger','secondary'];}
-            else if(status === 'denied'){ badge = ['{{__("Denied")}}','danger','success','secondary'];}
+            if(status === 1){ badge = ['{{__("Allowed")}}','success','danger','secondary'];}
+            else if(status === 0){ badge = ['{{__("Denied")}}','danger','success','secondary'];}
             $('#firewall_area').find("."+service+"-status-badge").find("a").text(badge[0]);
             $('#firewall_area').find("."+service+"-status-badge").removeClass('badge badge-'+badge[2]).removeClass('badge badge-'+badge[3]);
             $('#firewall_area').find("."+service+"-status-badge").addClass('badge badge-'+badge[1]);
