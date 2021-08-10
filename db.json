@@ -1,7 +1,7 @@
 {
     "name": "Web",
     "publisher": "Administrator",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "version_code": 12,
     "database": [],
     "widgets": [],
@@ -15,5 +15,5 @@
     "require_key": "false",
     "verification": null,
     "sslPorts": null,
-    "dependencies": "nginx pure-ftpd default-mysql-server openssl lsof php7.3 php7.3-fpm"
+    "dependencies": "nginx pure-ftpd default-mysql-server openssl lsof php7.3 php7.3-fpm php7.3-pgsql php7.3-mysql"
 }
