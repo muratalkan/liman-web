@@ -6,8 +6,8 @@
 - Adding domain names to the existing web application
 - Adding virtual FTP users to the existing web application
 - Creating PostgreSQL/MySQL users and databases
-- Granting and revoking permissions for the created PostgreSQL/MySQL users
-- Viewing PostgreSQL/MySQL tables
+- Granting and revoking PostgreSQL/MySQL user permissions
+- Viewing PostgreSQL/MySQL user and database tables
 - Installing PHP modules
 
 ## Liman MYS
