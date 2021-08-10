@@ -19,7 +19,7 @@ class ServiceController
 				$supportedPhps = Php::getSupportedVersions();
 				foreach($supportedPhps as $php){
 					$status = Command::runSudo('service '.strtolower($php).'-fpm status');
-					$log = Command::runSudo('journalctl -u '.strtolower($php).'-fpm -b | tail -50');
+					$log = Command::runSudo('journalctl -u '.strtolower($php).'-fpm -b | tail -100');
 					array_push($serviceArr, [
 						"service" => $php,
 						"status" => $status,
@@ -30,7 +30,7 @@ class ServiceController
 				}
 			} else{
 				$status = Command::runSudo('service '.$service.' status');
-				$log = Command::runSudo('journalctl -u '.$service.' -b | tail -50');
+				$log = Command::runSudo('journalctl -u '.$service.' -b | tail -100');
 				$portNumber = Service::serviceWithPorts()[$service];
 				$listeningPort = $this->checkServicePort($portNumber);
 				array_push($serviceArr, [
