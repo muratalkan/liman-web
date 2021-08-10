@@ -52,4 +52,14 @@ if (!$checkPackage) {
     ]
 ])
 
+@include('components.functions')
 @include('modals.__modal_loader')
+
+
+<style>
+
+.modal{
+  z-index: 10000000 !important;
+}
+
+</style>
