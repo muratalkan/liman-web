@@ -6,8 +6,8 @@
 - Adding domain names to the existing web application
 - Adding virtual FTP users to the existing web application
 - Creating PostgreSQL/MySQL users and databases
-- Granting and revoking permissions for the created PostgreSQL/MySQL users
-- Viewing PostgreSQL/MySQL tables
+- Granting and revoking PostgreSQL/MySQL user permissions
+- Viewing PostgreSQL/MySQL user and database tables
 - Installing PHP modules
 
 ## Liman MYS
@@ -16,7 +16,7 @@
 3. https://market.liman.dev/
 4. https://github.com/limanmys
 
-# Screenshots
+## Screenshots
 Dashboard Tab </br>
 <kbd>
  ![scr01](/screenshots/dashboardTab.jpg)
@@ -42,7 +42,8 @@ PHP Modules Tab </br>
   ![scr05](/screenshots/phpModulesTab.jpg)
 </kbd>
 
-# Default Web Page
+Default Web Page </br>
 <kbd>
-  ![scr05](/screenshots/defaultWebpage.jpg)
+  ![scr06](/screenshots/defaultWebpage.jpg)
 </kbd>
+
