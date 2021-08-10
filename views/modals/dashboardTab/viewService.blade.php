@@ -34,14 +34,8 @@
                     </button>
                  </div>
             </div>
-            <div class="card-body collapsed p-0">
-                <div style="height:250px; overflow-y: auto; background:black;" id="serviceViewStatus"> </div>
-            </div>
-            <div class="overlay">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">{{__('Loading')}}...</span>
-                </div>
-            </div>
+            <div class="card-body collapsed p-0" style="height:250px; overflow-y: auto; background:black;" id="serviceViewStatus"></div>
+            @include('components.loading-effect')
         </div>
     </div>
     <div class="col-md-6">
@@ -54,14 +48,8 @@
                     </button>
                  </div>
             </div>
-            <div class="card-body collapsed p-0">
-                <div style="height:250px; overflow-y: auto; background:black;" id="serviceViewDetails"> </div>
-            </div>
-            <div class="overlay">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">{{__('Loading')}}...</span>
-                </div>
-            </div>
+            <div class="card-body collapsed p-0" style="height:250px; overflow-y: auto; background:black;" id="serviceViewDetails"></div>
+            @include('components.loading-effect')
         </div>
     </div>
 </div>

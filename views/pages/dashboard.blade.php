@@ -26,11 +26,7 @@
                 </div>
                 <small>*{{__('All services must be allowed')}}</small>
             </div>
-            <div class="overlay">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">{{__('Loading')}}...</span>
-                </div>
-            </div>
+            @include('components.loading-effect')
         </div>
     </div>
 
@@ -45,11 +41,7 @@
             <div class="card-body" id="dashboard-table"> 
 
             </div>
-            <div class="overlay">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">{{__('Loading')}}...</span>
-                </div>
-            </div>
+            @include('components.loading-effect')
         </div>
     </div>
 </div>
@@ -169,14 +161,14 @@
             outputArr.forEach(function (output) {
                 serviceViewSBox.append("<option value='"+output.service.split('.').join('')+"'>"+output.service+"</option>");
                 const serviceName = output.service.split('.').join('');
-                serviceStatusDiv.append("<pre id='viewService_"+serviceName+"' style='color:white;' hidden>"+output.status+"</pre>");
+                serviceStatusDiv.append("<pre style='white-space:pre-wrap; word-wrap:break-word; color:white;' id='viewService_"+serviceName+"' hidden>"+output.status+"</pre>");
                 let color = "black";
                 if(output.status.includes("Active: active")) {  color="#28a745"; }
                 else if(output.status.includes("Active: inactive")) { color="#868e96";}
                 else if(output.status.includes("Active: failed")) { color="#dc3545"; }
                 $("#viewService_"+serviceName+"").css("background-color", color);
                 $("#viewService_"+serviceName+"").parent().css( "background-color", color);
-                serviceLogDiv.append("<pre id='viewService_"+serviceName+"' style='color:lime;' hidden>"+output.log+"</pre>");
+                serviceLogDiv.append("<pre style='white-space:pre-wrap; word-wrap:break-word; color:lime;' id='viewService_"+serviceName+"' hidden>"+output.log+"</pre>");
                 if(output.program !== ""){
                     servicePortDiv.append("<p id='viewService_"+serviceName+"' hidden><strong>"+output.port+"</strong> {{__('port number is used by')}} <strong>"+output.program+"</strong> </p>");
                     $("#viewServiceModal").find(".modal-footer").find("button").hide();
@@ -198,6 +190,7 @@
             });
             serviceStatusDiv.find("pre:first").removeAttr("hidden");
             serviceLogDiv.find("pre:first").removeAttr("hidden");
+            serviceLogDiv.animate({scrollTop: 999999999}, 1000);
             servicePortDiv.find("p:first").removeAttr("hidden");
             $("#viewServiceModal").modal('show');
             $("#viewServicePart2").find(".overlay").hide();

@@ -26,11 +26,7 @@
                             <pre id="installedModules"></pre>
                         </div>
                     </div>
-                    <div class="overlay">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">{{ __('Loading') }}...</span>
-                        </div>
-                    </div>
+                    @include('components.loading-effect')
                 </div>
             </div>
         </div>
@@ -39,16 +35,11 @@
         <div class="card">
             <div class="card-body">
                 <div style="margin-bottom: 1em">
-                    <button type="button" class="btn btn btn-success" onclick="installModules_Selections()"><i class="fas fa-download mr-1"></i>{{ __('Install Selected Modules')}}</button>
-                    <button type="button" class="btn btn btn-success" onclick="installModules_Manual()"><i class="fas fa-download mr-1"></i>{{ __('Install Module')}}</button>
+                    <button type="button" class="btn btn btn-success" onclick="installSelectedModules()"><i class="fas fa-download mr-1"></i>{{ __('Install Selected Modules')}}</button>
+                    <button type="button" class="btn btn btn-success" onclick="installModules()"><i class="fas fa-download mr-1"></i>{{ __('Install Module')}}</button>
                 </div>
-                <div id = "phpModule-table" class="table-content">
-                    <div class="table-body"></div>
-                    <div class="overlay">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">{{ __('Loading') }}...</span>
-                        </div>
-                    </div>
+                <div id="phpModule-table">
+                    @include('components.loading-effect')
                 </div>
             </div>
         </div>
@@ -66,7 +57,7 @@
 
     function getModules() {
         request("{{API('get_php_modules')}}", new FormData(), function(response) {
-            $('#phpModule-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
+            $('#phpModule-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             $('#phpModule-table').find('.overlay').hide();
         }, function(response) {
             const error = JSON.parse(response).message;
@@ -97,7 +88,6 @@
     }
 
     function getInstalledModules(){
-        $('#installed_modules_area').find('.overlay').show();
         request("{{API('get_installed_modules')}}", new FormData(), function(response){
             const output = JSON.parse(response).message;
             $('#installedModules').html(output.join(" | "));
@@ -114,7 +104,7 @@
         });
     }
 
-    function installModules_Selections(){
+    function installSelectedModules(){
         var modules = [];
 
         $('#phpModule-table').find('input[name$="btSelectItem"]').each(function () {
@@ -130,7 +120,7 @@
         installModule(modules);
     }
 
-    function installModules_Manual(){
+    function installModules(){
         Swal.fire({
               title: "{{__('Module Name')}}",
               input: 'text',
