@@ -73,10 +73,10 @@
         showSwal("{{__('Configuring')}}...", 'info');
         const service = $("#viewServicePart1").find("#serviceSBox option:selected").val();
         const program = $("#viewServicePart1").find("#serviceViewPort").find("strong:eq(1)").text();
-        let formData = new FormData();
-        formData.append('service', service);
-        formData.append('program', program);
-        request("{{API('conf_service_port')}}", formData, function(response) {
+        let form = new FormData();
+            form.append('service', service);
+            form.append('program', program);
+        request("{{API('conf_service_port')}}", form, function(response) {
             const output = JSON.parse(response).message;
             Swal.close();
             showSwal(output, 'info', 2000);

@@ -105,9 +105,9 @@
     
     getPgSQLDatabaseSBox();
     function getPgSQLDatabaseSBox(){
-        let formData = new FormData();
-            formData.append('databaseList', "pgsql");
-        request("{{API('get_pgsql_databases')}}", formData, function(response) {
+        let form = new FormData();
+            form.append('databaseList', "pgsql");
+        request("{{API('get_pgsql_databases')}}", form, function(response) {
             const dbList = JSON.parse(response).message;
             $("#pgsql_databaseSBox").html("");
             dbList.forEach(function(db){

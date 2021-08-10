@@ -89,9 +89,9 @@
 
     getMySQLDatabaseSBox();
     function getMySQLDatabaseSBox(){
-        let formData = new FormData();
-            formData.append('databaseList', "mysql");
-        request("{{API('get_mysql_databases')}}", formData, function(response) {
+        let form = new FormData();
+            form.append('databaseList', "mysql");
+        request("{{API('get_mysql_databases')}}", form, function(response) {
             const dbList = JSON.parse(response).message;
             $("#mysql_databaseSBox").html("<option value='-All-'>{{__('Tümü')}}</option>");
             dbList.forEach(function(db){

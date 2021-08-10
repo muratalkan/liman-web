@@ -25,10 +25,10 @@
             showLoaderOnConfirm: true,
               preConfirm: (password) => {
                 return new Promise((resolve) => {
-                    let formData = new FormData();
-                        formData.append("ftpUsername", ftpUser);
-                        formData.append("ftpPassword", password);
-                    request("{{API('reset_ftp_user')}}", formData, function(response) {
+                    let form = new FormData();
+                        form.append("ftpUsername", ftpUser);
+                        form.append("ftpPassword", password);
+                    request("{{API('reset_ftp_user')}}", form, function(response) {
                         const message = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Changed!') }}", text: message, type: "success", showConfirmButton: false});
                         setTimeout(function() { getFtpUsers(row); }, 1000);

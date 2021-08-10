@@ -44,9 +44,9 @@
 
     function getDomainNames(row){
         let webAppName = row.querySelector('#webAppName').innerHTML;
-        let formData = new FormData();
-        formData.append("webAppName", webAppName);
-        request("{{API('get_domain_names')}}", formData, function(response) {
+        let form = new FormData();
+            form.append("webAppName", webAppName);
+        request("{{API('get_domain_names')}}", form, function(response) {
             $('#domainNames-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             changeModalTitle('viewDomainNamesModal', '<h4><strong>'+webAppName+'</strong> | {{__("Domain Names")}} </h4>');
             Swal.close();
@@ -59,9 +59,9 @@
 
     function getFtpUsers(row){
         let webAppName = row.querySelector('#webAppName').innerHTML;
-        let formData = new FormData();
-        formData.append("webAppName", webAppName);
-        request("{{API('get_ftp_users')}}", formData, function(response) {
+        let form = new FormData();
+            form.append("webAppName", webAppName);
+        request("{{API('get_ftp_users')}}", form, function(response) {
             $('#ftpUsers-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             changeModalTitle('viewFtpUsersModal', '<h4><strong>'+webAppName+'</strong> | {{__("Virtual FTP Users")}} </h4>');
             Swal.close();

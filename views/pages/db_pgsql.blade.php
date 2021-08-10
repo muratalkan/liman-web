@@ -66,9 +66,9 @@
     function getPgSQLUserDatabases(row){
         showSwal('{{__("Loading")}}...','info');
         var dbusername = row.querySelector('#userName').innerHTML;
-        let formData = new FormData();
-        formData.append("userName", dbusername);
-        request("{{API('get_pgsql_user_databases')}}", formData, function(response) {
+        let form = new FormData();
+            form.append("userName", dbusername);
+        request("{{API('get_pgsql_user_databases')}}", form, function(response) {
             $('#pgsqlUserDB-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
             changeModalTitle('viewPgSQLUserDBModal', '<h4><strong>'+dbusername+'</strong> | PostgreSQL | {{__("Authorized Databases")}} </h4>');
@@ -82,9 +82,9 @@
     function getPgSQLDBTables(row){
         showSwal('{{__("Loading")}}...','info');
         var databaseName = row.querySelector('#dbName').innerHTML;
-        let formData = new FormData();
-        formData.append("databaseName", databaseName);
-        request("{{API('get_pgsql_dbtables')}}", formData, function(response) {
+        let form = new FormData();
+            form.append("databaseName", databaseName);
+        request("{{API('get_pgsql_dbtables')}}", form, function(response) {
             $('#pgsqlDBTable-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
             changeModalTitle('viewPgSQLDBTableModal', '<h4><strong>'+databaseName+'</strong> | PostgreSQL | {{__("Database Tables")}} </h4>');

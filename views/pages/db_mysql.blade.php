@@ -68,10 +68,10 @@
         showSwal('{{__("Loading")}}...','info');
         var dbusername = row.querySelector('#userName').innerHTML;
         var dbhostname = row.querySelector('#hostName').innerHTML;
-        let formData = new FormData();
-        formData.append("userName", dbusername);
-        formData.append("hostName", dbhostname);
-        request("{{API('get_mysql_user_databases')}}", formData, function(response) {
+        let form = new FormData();
+            form.append("userName", dbusername);
+            form.append("hostName", dbhostname);
+        request("{{API('get_mysql_user_databases')}}", form, function(response) {
             $('#mysqlUserDB-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
             changeModalTitle('viewMySQLUserDBModal', '<h4><strong>'+dbusername+'@'+dbhostname+'</strong> | MySQL | {{__("Authorized Databases")}} </h4>');
@@ -85,9 +85,9 @@
     function getMySQLDBTables(row){
         showSwal('{{__("Loading")}}...','info');
         var databaseName = row.querySelector('#dbName').innerHTML;
-        let formData = new FormData();
-        formData.append("databaseName", databaseName);
-        request("{{API('get_mysql_dbtables')}}", formData, function(response) {
+        let form = new FormData();
+            form.append("databaseName", databaseName);
+        request("{{API('get_mysql_dbtables')}}", form, function(response) {
             $('#mysqlDBTable-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             Swal.close();
             changeModalTitle('viewMySQLDBTableModal', '<h4><strong>'+databaseName+'</strong> | MySQL | {{__("Database Tables")}} </h4>');
