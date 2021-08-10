@@ -1,31 +1,48 @@
 # Liman MYS | Web Extension
 
-Tested on Ubuntu Server 18.04 and Pardus Server 19.5
+## Features
+- Supporting Nginx web server and PHP-fpm
+- Creating web applications
+- Adding domain names to the existing web application
+- Adding virtual FTP users to the existing web application
+- Creating PostgreSQL/MySQL users and databases
+- Granting and revoking permissions for the created PostgreSQL/MySQL users
+- Viewing PostgreSQL/MySQL tables
+- Installing PHP modules
 
-For more information:
-- https://liman.havelsan.com.tr/
-- https://www.liman.dev/
-- https://rehber.liman.dev/
-- https://github.com/limanmys
+## Liman MYS
+1. https://liman.havelsan.com.tr/
+2. https://www.liman.dev/
+3. https://market.liman.dev/
+4. https://github.com/limanmys
 
 # Screenshots
 Dashboard Tab </br>
-![scr01](/screenshots/dashboardTab.jpg)
+<kbd>
+ ![scr01](/screenshots/dashboardTab.jpg)
+</kbd>
 
 Web Applications Tab </br>
-![scr02](/screenshots/webAppsTab.jpg)
+<kbd>
+  ![scr02](/screenshots/webAppsTab.jpg)
+</kbd>
 
 Database - PostgreSQL Tab </br>
-![scr03](/screenshots/postgresqlTab.jpg)
+<kbd>
+  ![scr03](/screenshots/postgresqlTab.jpg)
+</kbd>
 
 Database - MySQL Tab </br>
-![scr04](/screenshots/mysqlTab.jpg)
+<kbd>
+  ![scr04](/screenshots/mysqlTab.jpg)
+</kbd>
 
 PHP Modules Tab </br>
-![scr05](/screenshots/phpModulesTab.jpg)
-
+ <kbd>
+  ![scr05](/screenshots/phpModulesTab.jpg)
+</kbd>
 
 # Default Web Page
 <kbd>
-  <img src="/screenshots/defaultWebPage.jpg">
+  ![scr05](/screenshots/defaultWebpage.jpg)
 </kbd>
