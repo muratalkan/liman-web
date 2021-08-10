@@ -2,16 +2,14 @@
     "id" => "viewFtpUsersModal"
 ])
 
-<div id="ftpUser-table" class="table-content">
-    <div class="table-body"> </div>
-</div>
+<div id="ftpUsers-table"> </div>
                 
 @endcomponent
 
 <script>
 
     function resetFtpUser(row){
-        var ftpUser = row.querySelector('#username').innerHTML;
+        let ftpUser = row.querySelector('#username').innerHTML;
         Swal.fire({
             title: ftpUser,
             text: "{{ __('Enter a new password to reset and change the password for this virtual FTP user') }}.",
@@ -28,8 +26,8 @@
               preConfirm: (password) => {
                 return new Promise((resolve) => {
                     let formData = new FormData();
-                    formData.append("ftpUsername", ftpUser);
-                    formData.append("ftpPassword", password);
+                        formData.append("ftpUsername", ftpUser);
+                        formData.append("ftpPassword", password);
                     request("{{API('reset_ftp_user')}}", formData, function(response) {
                         const message = JSON.parse(response).message;
                         Swal.fire({title:"{{ __('Changed!') }}", text: message, type: "success", showConfirmButton: false});
@@ -45,34 +43,19 @@
     }
 
     function deleteFtpUser(row){
-        var ftpUser = row.querySelector('#username').innerHTML;
-        Swal.fire({
-            title: ftpUser,
-            text: "{{ __('Are you sure you want to delete the FTP user?') }}",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: "{{ __('Delete') }}", cancelButtonText: "{{ __('Cancel') }}", 
-            showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise((resolve) => {
-                    let formData = new FormData();
-                    const webAppName = row.querySelector('#webAppName').innerHTML;
-                    formData.append("webAppName", webAppName);
-                    formData.append("ftpUsername", ftpUser);
-                    request("{{API('delete_ftp_user')}}", formData, function(response) {
-                        const message = JSON.parse(response).message;
-                        Swal.fire({title:"{{ __('Deleted!') }}", text: message, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getFtpUsers(row); }, 1000);
-                    }, function(response) {
-                        const error = JSON.parse(response).message;
-                        Swal.fire("{{ __('Error!') }}", error, "error");
-                    });
-                })
-              },
-              allowOutsideClick: false
-        });
-     
+        const webAppName = row.querySelector('#webAppName').innerHTML;
+        const ftpUser = row.querySelector('#username').innerHTML;
+        let form = new FormData();
+            form.append("webAppName", webAppName);
+            form.append("ftpUsername", ftpUser);
+        createConfirmationAlert(
+            ftpUser,
+            '{{ __("Are you sure you want to delete the virtual FTP user?") }}',
+            form,
+            'delete_ftp_user',
+            'getFtpUsers(row)',
+            row,
+        );
     }
 
 </script>

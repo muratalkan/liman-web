@@ -2,45 +2,28 @@
     "id" => "viewMySQLUserDBModal"
 ])
 
-<div id="mysqlUserDB-table" class="table-content">
-    <div class="table-body"> </div>
-</div>
+<div id="mysqlUserDB-table"></div>
                 
 @endcomponent
 
-
 <script>
 
-function revokeMySQLDBPrivilege(row){
-        var databaseName = row.querySelector('#dbName').innerHTML;
-        Swal.fire({
-            title: databaseName,
-            text: "{{ __('Are you sure you want to revoke MySQL database privilege?') }}",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: "{{ __('Revoke') }}", cancelButtonText: "{{ __('Cancel') }}", 
-            showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise((resolve) => {
-                    let formData = new FormData();
-                    const userName =  row.querySelector('#userName').innerHTML;
-                    const hostName =  row.querySelector('#hostName').innerHTML;
-                    formData.append("userName", userName);
-                    formData.append("hostName", hostName);
-                    formData.append("databaseName", databaseName);
-                    request("{{API('revoke_mysql_dbprivilege')}}", formData, function(response) {
-                        const output = JSON.parse(response).message;
-                        Swal.fire({title:"{{ __('Revoked!') }}", text: output, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getMySQLUserDatabases(row); }, 1000);
-                    }, function(response) {
-                        const error = JSON.parse(response).message;
-                        Swal.fire("{{ __('Error!') }}", error, "error");
-                    });
-                })
-              },
-              allowOutsideClick: false
-        });
+    function revokeMySQLDBPrivilege(row){
+        const databaseName = row.querySelector('#dbName').innerHTML;
+        const userName = row.querySelector('#userName').innerHTML;
+        const hostName = row.querySelector('#hostName').innerHTML;
+        let form = new FormData();
+            form.append("userName", userName);
+            form.append("hostName", hostName);
+            form.append("databaseName", databaseName);
+        createConfirmationAlert(
+            databaseName,
+            '{{ __("Are you sure you want to revoke MySQL database privilege?") }}',
+            form,
+            'revoke_mysql_dbprivilege',
+            'getMySQLUserDatabases(row)',
+            row
+        );
     }
 
 </script>

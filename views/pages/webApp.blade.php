@@ -12,15 +12,8 @@
             <div class="card-body">
                 <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#addWebAppModal"> <i class="fas fa-plus mr-1"></i>{{ __('Add Application')}}</button>
                 <br><br>
-                <div id="webApp-table" class="table-content">
-                    
-                    <div class="table-body"> </div>
-                    <div class="overlay">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">{{__('Loading')}}...</span>
-                        </div>
-                    </div>
-                    
+                <div id="webApp-table">
+                    @include('components.loading-effect')
                 </div>
             </div>
         </div>
@@ -35,7 +28,7 @@
 
     function getWebApps() {
         request("{{API('get_web_apps')}}", new FormData(), function(response) {
-            $('#webApp-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
+            $('#webApp-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             setBadges();
             $('#webApp-table').find('.overlay').hide();
             Swal.close();
@@ -50,11 +43,11 @@
     }
 
     function getDomainNames(row){
-        var webAppName = row.querySelector('#webAppName').innerHTML;
+        let webAppName = row.querySelector('#webAppName').innerHTML;
         let formData = new FormData();
         formData.append("webAppName", webAppName);
         request("{{API('get_domain_names')}}", formData, function(response) {
-            $('#domainName-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
+            $('#domainNames-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             changeModalTitle('viewDomainNamesModal', '<h4><strong>'+webAppName+'</strong> | {{__("Domain Names")}} </h4>');
             Swal.close();
             $('#viewDomainNamesModal').modal('show');
@@ -65,11 +58,11 @@
     }
 
     function getFtpUsers(row){
-        var webAppName = row.querySelector('#webAppName').innerHTML;
+        let webAppName = row.querySelector('#webAppName').innerHTML;
         let formData = new FormData();
         formData.append("webAppName", webAppName);
         request("{{API('get_ftp_users')}}", formData, function(response) {
-            $('#ftpUser-table').find('.table-body').html(response).find("table").DataTable(dataTablePresets('normal'));
+            $('#ftpUsers-table').html(response).find("table").DataTable(dataTablePresets('normal'));
             changeModalTitle('viewFtpUsersModal', '<h4><strong>'+webAppName+'</strong> | {{__("Virtual FTP Users")}} </h4>');
             Swal.close();
             $('#viewFtpUsersModal').modal('show');
@@ -80,7 +73,7 @@
     }
 
     function setViewAlert(row){
-        var webAppName = row.querySelector('#webAppName').innerHTML;
+        let webAppName = row.querySelector('#webAppName').innerHTML;
         Swal.fire({
             title: webAppName,
             text: "{{ __('Select the item you want to view') }}",
@@ -94,103 +87,62 @@
             showLoaderOnConfirm: true,
               preConfirm: (result) => {
                 return new Promise(() => {
-                  if(result == 'domainName'){
-                      getDomainNames(row);
-                  }else if(result == 'ftpUser'){
-                      getFtpUsers(row);
-                  }
+                    switch(result){
+                        case 'domainName':
+                            getDomainNames(row);
+                            break;
+                        case 'ftpUser':
+                            getFtpUsers(row);
+                            break;
+                    }
                 })
               }
         });
     }
 
     function enableWebApp(row){
-        var webAppName = row.querySelector('#webAppName').innerHTML;
-        Swal.fire({
-            title: webAppName,
-            text: "{{ __('Are you sure you want to enable the web app?') }}",
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonText: "{{ __('Enable') }}", cancelButtonText: "{{ __('Cancel')}}", 
-            showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise(() => {
-                    let formData = new FormData();
-                    formData.append("webAppName", webAppName);
-                    request("{{API('enable_web_app')}}", formData, function(response) {
-                        const message = JSON.parse(response).message;
-                        Swal.fire({title:"{{ __('Enabled!') }}", text: message, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getWebApps(); }, 1000);
-                    }, function(response) {
-                        const error = JSON.parse(response).message;
-                        Swal.fire("{{ __('Error!') }}", error, "error");
-                    });
-                })
-              },
-              allowOutsideClick: false
-        });
+        const webAppName = row.querySelector('#webAppName').innerHTML;
+        let form = new FormData();
+            form.append("webAppName", webAppName);
+        createConfirmationAlert(
+            webAppName,
+            '{{ __("Are you sure you want to enable the web app?") }}',
+            form,
+            'enable_web_app',
+            'getWebApps()'
+        );
     }
 
     function disableWebApp(row){
-        var webAppName = row.querySelector('#webAppName').innerHTML;
-        Swal.fire({
-            title: webAppName,
-            text: "{{ __('Are you sure you want to disable the web app?') }}",
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonText: "{{ __('Disable') }}", cancelButtonText: "{{ __('Cancel') }}", 
-            showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise((resolve) => {
-                    let formData = new FormData();
-                    formData.append("webAppName", webAppName);
-                    request("{{API('disable_web_app')}}", formData, function(response) {
-                        const message = JSON.parse(response).message;
-                        Swal.fire({title:"{{ __('Disabled!') }}", text: message, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getWebApps(); }, 1000);
-                    }, function(response) {
-                        const error = JSON.parse(response).message;
-                        Swal.fire("{{ __('Error!') }}", error, "error");
-                    });
-                })
-              },
-              allowOutsideClick: false
-        });
+        const webAppName = row.querySelector('#webAppName').innerHTML;
+        let form = new FormData();
+            form.append("webAppName", webAppName);
+        createConfirmationAlert(
+            webAppName,
+            '{{ __("Are you sure you want to disable the web app?") }}',
+            form,
+            'disable_web_app',
+            'getWebApps()'
+        );
     }
 
     function deleteWebApp(row){
-        var webAppName = row.querySelector('#webAppName').innerHTML;
-        Swal.fire({
-            title: webAppName,
-            text: "{{ __('Are you sure you want to delete the web app?') }}",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: "{{ __('Delete') }}", cancelButtonText: "{{ __('Cancel') }}", 
-            showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise((resolve) => {
-                    let formData = new FormData();
-                    formData.append("webAppName", webAppName);
-                    request("{{API('delete_web_app')}}", formData, function(response) {
-                        const message = JSON.parse(response).message;
-                        Swal.fire({title:"{{ __('Deleted!') }}", text: message, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getWebApps(); }, 1000);
-                    }, function(response) {
-                        const error = JSON.parse(response).message;
-                        Swal.fire("{{ __('Error!') }}", error, "error");
-                    });
-                })
-              },
-              allowOutsideClick: false
-        });
-     
+        const webAppName = row.querySelector('#webAppName').innerHTML;
+        let form = new FormData();
+            form.append("webAppName", webAppName);
+        createConfirmationAlert(
+            webAppName,
+            '{{ __("Are you sure you want to delete the web app?") }}',
+            form,
+            'delete_web_app',
+            'getWebApps()'
+        );
     }
 
     function setBadges(){
         $('#webApp-table').find('th').eq(4).addClass("text-center");
         $('#webApp-table').find('th').eq(3).addClass("text-center");
-        $('#webApp-table').find('.table-body').find("td[id='https']").each(function(){
+        $('#webApp-table').find('table').find("td[id='https']").each(function(){
             $(this).addClass("text-center");
                 if($(this).text() == "yes"){
                     $(this).html(`<small class="badge badge-success"><i class="fas fa-check-circle"></i></small>`);
@@ -198,7 +150,7 @@
                     $(this).html(`<small class="badge badge-danger"><i class="fas fa-times-circle"></i></small>`);
                 }
             });
-        $('#webApp-table').find('.table-body').find("td[id='status']").each(function(){
+        $('#webApp-table').find('table').find("td[id='status']").each(function(){
             $(this).addClass("text-center");
             if($(this).text() == "enabled"){
                 $(this).html(`<small class="badge badge-primary">{{ __('Enabled')}}</small>`);

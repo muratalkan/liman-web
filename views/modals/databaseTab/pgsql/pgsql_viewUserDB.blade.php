@@ -2,43 +2,26 @@
     "id" => "viewPgSQLUserDBModal"
 ])
 
-<div id="pgsqlUserDB-table" class="table-content">
-    <div class="table-body"> </div>
-</div>
+<div id="pgsqlUserDB-table"></div>
                 
 @endcomponent
 
-
 <script>
 
-function revokePgSQLDBPrivilege(row){
-        var databaseName = row.querySelector('#dbName').innerHTML;
-        Swal.fire({
-            title: databaseName,
-            text: "{{ __('Are you sure you want to revoke PostgreSQL database privilege?') }}",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: "{{ __('Revoke') }}", cancelButtonText: "{{ __('Cancel') }}", 
-            showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise((resolve) => {
-                    let formData = new FormData();
-                    const dbUser = row.querySelector('#userName').innerHTML;
-                    formData.append("userName", dbUser);
-                    formData.append("databaseName", databaseName);
-                    request("{{API('revoke_pgsql_dbprivilege')}}", formData, function(response) {
-                        const output = JSON.parse(response).message;
-                        Swal.fire({title:"{{ __('Revoked!') }}", text: output, type: "success", showConfirmButton: false});
-                        setTimeout(function() { getPgSQLUserDatabases(row); }, 1000);
-                    }, function(response) {
-                        const error = JSON.parse(response).message;
-                        Swal.fire("{{ __('Error!') }}", error, "error");
-                    });
-                })
-              },
-              allowOutsideClick: false
-        });
+    function revokePgSQLDBPrivilege(row){
+        const databaseName = row.querySelector('#dbName').innerHTML;
+        const dbUser = row.querySelector('#userName').innerHTML;
+        let form = new FormData();
+            form.append("userName", dbUser);
+            form.append("databaseName", databaseName);
+        createConfirmationAlert(
+            databaseName,
+            '{{ __("Are you sure you want to revoke PostgreSQL database privilege?") }}',
+            form,
+            'revoke_pgsql_dbprivilege',
+            'getPgSQLUserDatabases(row)',
+            row
+        );
     }
 
 </script>

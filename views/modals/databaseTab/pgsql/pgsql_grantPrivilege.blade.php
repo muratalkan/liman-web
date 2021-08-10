@@ -105,17 +105,17 @@
     
     getPgSQLDatabaseSBox();
     function getPgSQLDatabaseSBox(){
-        let data = new FormData();
-        data.append('databaseList', "pgsql");
-        request("{{API('get_pgsql_databases')}}",  data, function(response) {
-            let dbList = JSON.parse(response).message;
+        let formData = new FormData();
+            formData.append('databaseList', "pgsql");
+        request("{{API('get_pgsql_databases')}}", formData, function(response) {
+            const dbList = JSON.parse(response).message;
             $("#pgsql_databaseSBox").html("");
             dbList.forEach(function(db){
                 $("#pgsql_databaseSBox").append("<option value='"+db['dbName']+"'>"+db['dbName']+"</option>");
             });
         }, function(response) {
-            let error = JSON.parse(response);
-            showSwal(error.message, 'error', 2000);
+            const error = JSON.parse(response).message;
+            showSwal(error, 'error', 2000);
         });
     }
 
