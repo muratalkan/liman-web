@@ -35,7 +35,6 @@
 	"The service port has been configured" : "Servis portu ayarlandı",
 	"The service port could not be configured!" : "Servis portu ayarlanamadı!",
 
-
 	"Web Applications" : "Web Uygulamaları",
 	"You can view the available web applications on this tab. Also, you can use the 'Add Application' button to add a new application and you can left or right click on the application that you want to make operation" : "Bu sekmeden mevcut web uygulamalarını görebilirsiniz. Ayrıca, yeni bir uygulama eklemek için 'Uygulama Ekle' butonunu kullanabilir ve işlem yapmak istediğiniz uygulamaya sol veya sağ tıklayarak işlem yapabilirsiniz",
 	"To view your websites in the browser, you must add the domain names to '/etc/hosts' file" : "Web sitelerinizi tarayıcıda görüntülemek için alan adlarını '/etc/hosts' dosyasına eklemeniz gerekmektedir",
@@ -45,11 +44,13 @@
 	"Virtual FTP Users" : "Sanal FTP Kullanıcıları",
 	"Select the item you want to view" : "Görüntülemek istediğiniz öğeyi seçiniz",
 	"View" : "Görüntüle",
+	"Confirm": "Onayla",
 	"Cancel" : "İptal",
 	"Are you sure you want to enable the web app?" : "Web uygulamasını etkinleştirmek istediğinize emin misiniz?",
 	"Enable" : "Etkinleştir", 
 	"Enabled!" : "Etkinleştirildi!", 
 	"Enabled" : "Etkin",
+	"Success": "Başarılı",
 	"Error!": "Hata!",
 	"Are you sure you want to disable the web app?" : "Web uygulamasını devre dışı bırakmak istediğinize emin misiniz?",
 	"Disable" : "Devre dışı bırak", 
@@ -95,7 +96,7 @@
 	"Apply" : "Uygula",
 	"Password must be a minimum of 6 and a maximum of 25 characters long" : "Parola minimum 6 ve maksimum 25 karakter uzunluğunda olmalı",
 	"Changed!" : "Değiştirildi!",
-	"Are you sure you want to delete the FTP user?" : "FTP kullanıcısını silmek istediğinize emin misiniz?",
+	"Are you sure you want to delete the virtual FTP user?" : "Sanal FTP kullanıcısını silmek istediğinize emin misiniz?",
 	"Nginx configuration test failed" : "Nginx yapılandırma testi hatalı!",
 	"The web app has been added" : "Web uygulaması eklendi",
 	"The web app already exists!" : "Bu web uygulaması zaten var!",
@@ -122,7 +123,6 @@
 	"The virtual FTP user's password could not be changed!" : "Sanal FTP kullanıcının parolası değiştirilemedi!",
 	"The virtual FTP user has been deleted" : "Sanal FTP kullanıcısı silindi",
 	"The virtual FTP user could not be deleted!" : "Sanal FTP kullanıcısı silinemedi!",
-
 
 	"PostgreSQL Users" : "PostgreSQL Kullanıcıları",
 	"PostgreSQL Databases" : "PostgreSQL Veritabanları",
@@ -176,7 +176,6 @@
 	"The database user's database privilege has been revoked" : "Veritabanı kullanıcısının veritabanı yetkisi geri alındı",
 	"Default database user's database privilege cannot be revoked!" : "Varsayılan veritabanı kullanıcısının veritabanı yetkisi geri alınamaz!",
 	"The database user's database privilege could not be revoked!" : "Veritabanı kullanıcısının veritabanı yetkisi geri alınamadı!",
-	
 
 	"Databases" : "Veritabanları",
 	"MySQL Users" : "MySQL Kullanıcıları",
@@ -198,7 +197,6 @@
 	"Are you sure you want to delete the MySQL database table?" : "MySQL veritabanı tablosunu silmek istediğinize emin misiniz?",
 	"Are you sure you want to revoke MySQL database privilege?" : "MySQL veritabanı yetkisini kaldırmak istediğinize emin misiniz?",
 
-	
 	"PHP Modules" : "PHP Modülleri",
 	"PHP Information" : "PHP Bilgileri",
 	"Supported PHP Versions" : "Desteklenen PHP Versiyonları",
@@ -217,9 +215,7 @@
 	"Your request has been successfully completed" : "İsteğiniz başarıyla tamamlandı",
 	"An error occurred while processing your request" : "İsteğiniz yerine getirilirken bir hata oluştu",
 
-
 	"In order to use this extension, you must install the some packages on the server. You can install it by clicking on 'Install Packages' button below" : "Bu eklentiyi kullanabilmek için bazı paketleri sunucuya yüklemeniz gerekmektedir. Aşağıda yer alan 'Paketleri Yükle' butonunu kullanarak kurulumu gerçekleştirebilirsiniz",
-	"Install Packages" : "Paketleri Yükle",
-	"Package Installer" : "Paket Yükleyici"
+	"Install Packages" : "Paketleri Yükle"
 
 }
