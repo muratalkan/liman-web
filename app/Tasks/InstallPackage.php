@@ -20,7 +20,7 @@ class InstallPackage extends Task
 		$packagesArr = Package::getPackageToInstall();
 		$phpPck = preparePhpModules(Module::getPreInstalledModules());
 
-		$this->control = Distro::debian('apt|dpkg')
+		$this->control = Distro::debian('apt\|dpkg')
 			->centos('yum install')
 			->get();
 
