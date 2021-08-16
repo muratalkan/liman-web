@@ -16,7 +16,7 @@ class InstallModule extends Task
 	{
 		$result = preparePhpModules($attrbs);
 
-		$this->control = Distro::debian('apt-get install')
+		$this->control = Distro::debian('apt|dpkg')
 			->centos('yum install')
 			->get();
 
@@ -29,7 +29,7 @@ class InstallModule extends Task
 			->get();
 
 		$this->attributes = $attrbs;
-		$this->logFile = Formatter::run('/tmp/apt-install_phpModules.txt');
+		$this->logFile = Formatter::run('/tmp/apt-installPhpModules.txt');
 	}
 
 }
