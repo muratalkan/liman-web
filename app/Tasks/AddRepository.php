@@ -18,9 +18,8 @@ class AddRepository extends Task
 			Command::runSudo("apt-get -y install apt-transport-https lsb-release ca-certificates");
 			Command::runSudo("wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg");
 			Command::runSudo("sh -c 'echo \"deb https://packages.sury.org/php/ stretch main\" > /etc/apt/sources.list.d/php.list'");
-			Command::runSudo("apt update");
 
-		$this->control = Distro::debian('add-apt-repository')
+		$this->control = Distro::debian('apt|dpkg')
 			->centos('yum install')
 			->get();
 
@@ -33,7 +32,7 @@ class AddRepository extends Task
 			->get();
 
 		$this->attributes = $attrbs;
-		$this->logFile = Formatter::run('/tmp/apt-add_repositories.txt');
+		$this->logFile = Formatter::run('/tmp/apt-addRepositories.txt');
 	}
 
 }
