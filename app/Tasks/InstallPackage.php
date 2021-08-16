@@ -20,7 +20,7 @@ class InstallPackage extends Task
 		$packagesArr = Package::getPackageToInstall();
 		$phpPck = preparePhpModules(Module::getPreInstalledModules());
 
-		$this->control = Distro::debian('apt\|dpkg')
+		$this->control = Distro::debian('apt|dpkg')
 			->centos('yum install')
 			->get();
 
@@ -30,13 +30,13 @@ class InstallPackage extends Task
 			->centos(
 				'
 					yum install '.implode(' ', $packagesArr).' -y; 
-					yum install '.$phpPck['centosModsCmd'].' -y
+					yum install '.$phpPck['centosModsCmd'].'
 				'
 			)
 			->get();
 
 		$this->attributes = $attrbs;
-		$this->logFile = Formatter::run('/tmp/apt-install_initialPackages.txt');
+		$this->logFile = Formatter::run('/tmp/apt-installPackages.txt');
 	}
 
 }
