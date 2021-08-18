@@ -23,9 +23,9 @@ class Module
 	
 	public static function getModulesList(){
 	   return [
-			"apc", "bcmath", "bz2", "calendar", "Core", "ctype", "curl", "date", "dba", "dom", "enchant", 
+			"apc", "bcmath", "bz2", "calendar", "Core", "ctype", "date", "dba", "dom", 
 			"exif", "fileinfo", "filter", "ftp", "gd", "gettext", "gmp", "hash", "iconv", "ldap", "json", "libxml", 
-			"mbstring", "mcrypt", "mongodb", "mysqli", "openssl", "odbc", "pcntl", "pcre", "PDO", "pdo_mysql", 
+			"mcrypt", "mongodb", "mysqli", "openssl", "odbc", "pcntl", "pcre", "PDO", "pdo_mysql", 
 			"Phar", "pgsql", "pspell", "readline", "Reflection", "session", "shmop", "SimpleXML","snmp", "soap", 
 			"sockets", "SPL", "sqlite3", "standard", "tidy", "tokenizer", "xml", "xmlreader", "xmlwriter", "xsl", "zip"
 		];
