@@ -57,7 +57,7 @@
 
     function getModules() {
         request("{{API('get_php_modules')}}", new FormData(), function(response) {
-            $('#phpModule-table').html(response).find("table").DataTable(dataTablePresets('normal'));
+            $('#phpModule-table').html(response).find("table").DataTable(dataTablePresets('multiple'));
             $('#phpModule-table').find('.overlay').hide();
         }, function(response) {
             const error = JSON.parse(response).message;
@@ -98,20 +98,12 @@
         });
     }
 
-    function checkAllModules(){
-        $('#phpModule-table').find('input[type="checkbox"]').each(function() {
-            this.checked = $('#phpModule-table').find('#btSelectAll').prop('checked');
-        });
-    }
-
     function installSelectedModules(){
         var modules = [];
-
-        $('#phpModule-table').find('input[name$="btSelectItem"]').each(function () {
-            if(this.checked){
-                modules.push(this.value);
-            }
+        $("#phpModule-table table").DataTable().rows( { selected: true } ).data().each(function(element){
+            modules.push(element[1].split('/')[0]);
         });
+
         if(modules.length === 0){
             showSwal("{{__('Please make a selection first!')}}", 'error', 2000);
             return false;
